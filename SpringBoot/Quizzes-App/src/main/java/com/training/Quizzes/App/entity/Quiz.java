@@ -2,6 +2,7 @@ package com.training.Quizzes.App.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,32 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "Quizes")
 public class Quiz {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-
-	private String title;
-			
-	@OneToMany
-	private List<Question> questionList ;
+	private int id ;
 	
-	public void addQuestion(Question question) {
-		questionList.add(question);
-	}
-
-	public void deleteQuestion(Question question) {
-		questionList.remove(question);
-	}
+	private String title ;
 	
-	public void deleteQuestion(int id) {
-		for(int i = 0 ; i < questionList.size();i++)
-			if(questionList.get(i).getId() == id)
-				deleteQuestion(questionList.get(i));
-	}
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "quiz")
+	List<Question> questionList;
 
 	public int getId() {
 		return id;
@@ -60,9 +47,7 @@ public class Quiz {
 		this.questionList = questionList;
 	}
 
-	@Override
-	public String toString() {
-		return "Quiz [id=" + id + ", title=" + title + "]";
-	}
-
+	
+	
+	
 }

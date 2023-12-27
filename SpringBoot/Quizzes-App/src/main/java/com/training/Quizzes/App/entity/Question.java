@@ -1,16 +1,19 @@
 package com.training.Quizzes.App.entity;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "Questions")
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "Questions_ID")
 	private int id;
 
 	private String description;
@@ -18,12 +21,15 @@ public class Question {
 	private String answer;
 		
 	private int score;
-		
+	
+	@ManyToOne
+	private Quiz quiz;
+			
 	public Question() {
 
 	}
 
-	public Question(String description, String answer, int score, int questionLevel) {
+	public Question(String description, String answer, int score) {
 		super();
 		this.description = description;
 		this.answer = answer;
@@ -61,8 +67,7 @@ public class Question {
 	public void setScore(int score) {
 		this.score = score;
 	}
-
-
+	
 	@Override
     public String toString() {
         return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score + "]";
