@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,6 +24,7 @@ public class Question {
 	private int score;
 	
 	@ManyToOne
+	@JoinColumn(name = "quizid")
 	private Quiz quiz;
 			
 	public Question() {
@@ -67,7 +69,15 @@ public class Question {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+		
+	public Quiz getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(Quiz quiz) {
+		this.quiz = quiz;
+	}
+
 	@Override
     public String toString() {
         return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score + "]";

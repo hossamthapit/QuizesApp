@@ -9,6 +9,6 @@ import com.training.Quizzes.App.entity.Question;
 
 @RepositoryRestResource(path = "questions")
 @CrossOrigin(value = "http://localhost:4200/")
-public interface QuestionRepository extends JpaRepository<Question, Integer> {
+public interface QuestionRepository extends JpaRepository<Question, Integer> , CustomQuestionRepository {
 	
 }
