@@ -14,7 +14,6 @@ import javax.persistence.Table;
 public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "Questions_ID")
 	private int id;
 
 	private String description;
