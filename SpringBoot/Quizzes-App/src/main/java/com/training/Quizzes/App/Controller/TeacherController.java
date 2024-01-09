@@ -108,6 +108,7 @@ public class TeacherController {
 		teacher.setLastName(teacherRequest.getLastName());
 		teacher.setNationalId(teacherRequest.getNationalId());
 		teacher.setAge(teacherRequest.getAge());
+		teacher.setPictureUrl(teacherRequest.getPictureUrl());
 
 		return new ResponseEntity<>(teacherRepository.save(teacher), HttpStatus.OK);
 	}
