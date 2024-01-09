@@ -1,6 +1,7 @@
 package com.training.Quizzes.App.entity;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -8,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "Questions")
@@ -17,15 +20,20 @@ public class Question {
 	private int id;
 
 	private String description;
-	
+
 	private String answer;
-		
+
 	private int score;
-	
-	@ManyToOne
-	@JoinColumn(name = "quizid")
-	private Quiz quiz;
-			
+
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "questions")
+//	@JsonIgnore
+//	private Set<Exam> exams = new HashSet<>();
+
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "exam_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	private Exam exam ;
+
 	public Question() {
 
 	}
@@ -68,22 +76,32 @@ public class Question {
 	public void setScore(int score) {
 		this.score = score;
 	}
-		
-	public Quiz getQuiz() {
-		return quiz;
-	}
 
-	public void setQuiz(Quiz quiz) {
-		this.quiz = quiz;
-	}
+//	public Set<Exam> getExams() {
+//		return exams;
+//	}
+//
+//	public void setExams(Set<Exam> exams) {
+//		this.exams = exams;
+//	}
 
 	@Override
-    public String toString() {
-        return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score + "]";
-    }
-	
-	public int checkAnswer(String response) {
-		return ((response.equals(answer))? score : 0);
+	public String toString() {
+		return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score + "]";
 	}
+
+	public int checkAnswer(String response) {
+		return ((response.equals(answer)) ? score : 0);
+	}
+
+	public Exam getExams() {
+		return exam;
+	}
+
+	public void setExams(Exam exams) {
+		this.exam = exams;
+	}
+	
+	
 
 }
