@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/rest/home")
+@RequestMapping("/api/home")
 public class HomeController {
     @ResponseBody
     @RequestMapping(value = "",method = RequestMethod.GET)

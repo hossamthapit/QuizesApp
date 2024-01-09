@@ -1,13 +1,19 @@
 package com.training.Quizzes.App.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.service.UserService;
+
 import io.jsonwebtoken.Claims;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -15,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,6 +33,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
     private final ObjectMapper mapper;
+    
+    @Autowired
+    private UserService userService;
 
     public JwtAuthorizationFilter(JwtUtil jwtUtil, ObjectMapper mapper) {
         this.jwtUtil = jwtUtil;
@@ -46,11 +56,17 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
             if(claims != null & jwtUtil.validateClaims(claims)){
                 String email = claims.getSubject();
+                
+            	Optional<User> existingUser = userService.findByEmail(email);
+            	System.out.println(existingUser);
+
+                
                 System.out.println("email : "+email);
                 Authentication authentication =
                         new UsernamePasswordAuthenticationToken(email,"",new ArrayList<>());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+            
 
         }catch (Exception e){
             errorDetails.put("message", "Authentication Error");

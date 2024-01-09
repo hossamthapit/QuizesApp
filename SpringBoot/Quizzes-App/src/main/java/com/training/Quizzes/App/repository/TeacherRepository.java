@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.training.Quizzes.App.entity.Teacher;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface  TeacherRepository extends JpaRepository<Teacher, Integer>   {
 	
 	  List<Teacher> findTeachersByGroupsId(int groupId);

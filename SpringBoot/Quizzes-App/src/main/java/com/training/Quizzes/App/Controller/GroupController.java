@@ -15,7 +15,7 @@ import com.training.Quizzes.App.repository.ExamRepository;
 import com.training.Quizzes.App.repository.GroupRepository;
 
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
 public class GroupController {

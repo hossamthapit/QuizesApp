@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.training.Quizzes.App.entity.ExamRecord;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface ExamRecordRepository extends JpaRepository<ExamRecord, Integer> {
 
 	List<ExamRecord> findByStudentId(int studentId);

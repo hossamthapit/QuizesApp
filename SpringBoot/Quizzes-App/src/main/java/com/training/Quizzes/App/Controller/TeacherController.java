@@ -10,11 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
+import com.training.Quizzes.App.entity.Student;
 import com.training.Quizzes.App.entity.Teacher;
 import com.training.Quizzes.App.repository.GroupRepository;
 import com.training.Quizzes.App.repository.TeacherRepository;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
 public class TeacherController {
@@ -37,6 +38,15 @@ public class TeacherController {
 
 		return new ResponseEntity<>(teachers, HttpStatus.OK);
 	}
+	
+	@PostMapping("/teachers")
+	public ResponseEntity<Teacher> createStudent(@RequestBody Teacher teacher) {
+		Teacher tempTeacher = teacherRepository.save(new Teacher(teacher.getFirstName(), teacher.getLastName(),
+				teacher.getNationalId(), teacher.getAge(), teacher.getPictureUrl()));
+
+		return new ResponseEntity<>(tempTeacher, HttpStatus.CREATED);
+	}
+
 
 	@GetMapping("/groups/{groupId}/teachers")
 	public ResponseEntity<List<Teacher>> getAllTeachersByGroupId(@PathVariable(value = "groupId") int groupId) {
@@ -67,11 +77,11 @@ public class TeacherController {
 	}
 
 	@PostMapping("/groups/{groupId}/teachers")
-	public ResponseEntity<Teacher> addTag(@PathVariable(value = "groupId") int groupId,
-			@RequestBody Teacher teacherRequest) {
+	public ResponseEntity<Teacher> addTag(@PathVariable(value = "groupId") int groupId, @RequestBody Teacher teacherRequest) {
 		Teacher teacher = groupRepository.findById(groupId).map(group -> {
 			int teacherId = teacherRequest.getId();
 
+			System.out.println(groupId);
 			// tag is existed
 			if (teacherId != 0L) {
 				Teacher tempTeacher = teacherRepository.findById(teacherId)
@@ -101,6 +111,24 @@ public class TeacherController {
 
 		return new ResponseEntity<>(teacherRepository.save(teacher), HttpStatus.OK);
 	}
+	
+	  @PostMapping("/groups/{groupId}/teachers/{teacherId}")
+	  public ResponseEntity<HttpStatus> addStudentToGroup(@PathVariable(value = "groupId") int groupId, @PathVariable(value = "teacherId") int teacherId) {
+	      Group group = groupRepository.findById(groupId)
+	              .orElseThrow(() -> new ResourceNotFoundException("Not found Group with id = " + groupId));
+	      
+	      Teacher teacher = teacherRepository.findById(teacherId)
+	              .orElseThrow(() -> new ResourceNotFoundException("Not found Teacher with id = " + teacherId));
+
+	      // Add the student to the group if not already present
+	      if (!group.getStudents().contains(teacher)) {
+	          group.addTeacher(teacher);
+	          groupRepository.save(group);
+	          return new ResponseEntity<>(HttpStatus.CREATED);
+	      } else {
+	          return new ResponseEntity<>(HttpStatus.CONFLICT); // Or any other appropriate status
+	      }
+	  }
 
 	@DeleteMapping("/groups/{groupId}/teachers/{teacherId}")
 	public ResponseEntity<HttpStatus> deleteTeacherFromGroup(@PathVariable(value = "groupId") int groupId,

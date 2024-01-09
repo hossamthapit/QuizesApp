@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.training.Quizzes.App.entity.Exam;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface ExamRepository extends JpaRepository<Exam, Integer> {
 
 	Page<Exam> findByTitleContaining(String title, PageRequest pageRequest);

@@ -56,6 +56,11 @@ public class Teacher implements Person{
 		this (firstName,lastName,nationalId);
 		this.age = age;
 	}
+	public Teacher(String firstName, String lastName, String nationalId, int age, String pictureUrl) {
+		this (firstName,lastName,nationalId,age);
+		this.pictureUrl = pictureUrl;
+	}
+
 
 	public int getId() {
 		return id;

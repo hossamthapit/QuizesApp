@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.training.Quizzes.App.entity.Group;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
 	List<Group> findGroupsByStudentsId(int studentId);
