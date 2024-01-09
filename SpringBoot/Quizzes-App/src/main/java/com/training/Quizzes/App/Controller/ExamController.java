@@ -69,6 +69,7 @@ public class ExamController {
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id = " + id));
 
 		tempExam.setTitle(exam.getTitle());
+		tempExam.setDescription(exam.getDescription());
 
 		return new ResponseEntity<>(examRepository.save(tempExam), HttpStatus.OK);
 	}

@@ -23,6 +23,7 @@ public class Exam {
 	private int id;
 
 	private String title;
+	private String description;
 
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 //	@JoinTable(name = "exam_questions", joinColumns = { @JoinColumn(name = "exam_id") }, inverseJoinColumns = {
@@ -77,6 +78,14 @@ public class Exam {
 
 	public void setGroup(Group group) {
 		this.group = group;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 //	public Set<Question> getQuestions() {

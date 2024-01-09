@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
-import com.training.Quizzes.App.entity.Student;
 import com.training.Quizzes.App.entity.Teacher;
 import com.training.Quizzes.App.repository.GroupRepository;
 import com.training.Quizzes.App.repository.TeacherRepository;

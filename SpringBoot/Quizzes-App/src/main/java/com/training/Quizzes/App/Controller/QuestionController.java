@@ -14,7 +14,7 @@ import com.training.Quizzes.App.entity.Question;
 import com.training.Quizzes.App.repository.ExamRepository;
 import com.training.Quizzes.App.repository.QuestionRepository;
 
-@CrossOrigin(value = "http://localhost:4200/")
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
 public class QuestionController {
@@ -85,11 +85,9 @@ public class QuestionController {
 	public ResponseEntity<List<Question>> getAllQuestionsByExamId(
 			@PathVariable(value = "examId") int examId) {
 		
-		System.out.println("here we are ");
 		if (!examRepository.existsById(examId)) {
 			throw new ResourceNotFoundException("Not found Exam with id = " + examId);
 		}
-		System.out.println("here we go ");
 		List<Question> questions = questionRepository.findByExamId(examId);
 		return new ResponseEntity<>(questions, HttpStatus.OK);
 	}
@@ -97,6 +95,8 @@ public class QuestionController {
 	@PostMapping("/exams/{examId}/questions")
 	public ResponseEntity<Question> createComment(@PathVariable(value = "examId") int examId,
 			@RequestBody Question questionRequest) {
+		System.out.println(examId);
+		System.out.println(questionRequest);
 		Question question = examRepository.findById(examId).map(exam -> {
 			questionRequest.setExams(exam);
 			return questionRepository.save(questionRequest);
@@ -115,5 +115,7 @@ public class QuestionController {
 		questionRepository.deleteByExamId(examId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
+	
+	
 
 }
