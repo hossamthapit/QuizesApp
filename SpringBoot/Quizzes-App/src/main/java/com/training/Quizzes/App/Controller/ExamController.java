@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Exam;
+import com.training.Quizzes.App.entity.Group;
+import com.training.Quizzes.App.entity.Question;
 import com.training.Quizzes.App.repository.ExamRepository;
 import com.training.Quizzes.App.repository.GroupRepository;
 
@@ -76,9 +78,12 @@ public class ExamController {
 
 	@DeleteMapping("/exams/{id}")
 	public ResponseEntity<HttpStatus> deleteGroup(@PathVariable("id") int id) {
-		examRepository.deleteById(id);
+	    Exam exam = examRepository.findById(id)
+	            .orElseThrow(() -> new ResourceNotFoundException("Exam not found with id: " + id));
 
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	        examRepository.delete(exam);
+
+	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping("/exams")
@@ -100,6 +105,23 @@ public class ExamController {
 		return new ResponseEntity<>(exams, HttpStatus.OK);
 	}
 	
+	
+	@PostMapping("/groups/{groupId}/exams")
+	public ResponseEntity<Exam> createComment(@PathVariable(value = "groupId") int groupId,
+			@RequestBody Exam examRequest) {
+		
+	    return groupRepository.findById(groupId).map(group -> {
+	        Exam exam = new Exam(); 
+
+	        exam.setGroup(group);
+	        exam.setTitle(examRequest.getTitle());
+	        exam.setDescription(examRequest.getDescription());
+
+	        Exam savedExam = examRepository.save(exam); // Save the Exam
+	        return new ResponseEntity<>(savedExam, HttpStatus.CREATED);
+	    }).orElseThrow(() -> new ResourceNotFoundException("Not found Group with id = " + groupId));
+	}
+
 
 
 //	@DeleteMapping("/groups/{groupId}/examRecords")

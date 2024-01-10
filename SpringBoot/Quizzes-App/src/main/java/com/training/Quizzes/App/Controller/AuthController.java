@@ -41,14 +41,16 @@ public class AuthController {
         try {
         	Optional<User> existingUser = userService.findByEmail(loginReq.getEmail());
 
-        	if(!existingUser.isPresent())throw new Exception("No such email exist");
+        	User user = existingUser.orElseThrow(() -> new Exception("No such email exist"));
         	
             Authentication authentication =
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
             String email = authentication.getName();
-            User user = new User(email,"");
+//          User user = new User(email,"");
+            // cast the existingUser to user 
             String token = jwtUtil.createToken(user);
-            LoginRes loginRes = new LoginRes(email,token);
+            user.setPassword("******");
+            LoginRes loginRes = new LoginRes(email,token,user);
 
             return ResponseEntity.ok(loginRes);
 
