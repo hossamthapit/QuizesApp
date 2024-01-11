@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
@@ -18,6 +19,7 @@ import com.training.Quizzes.App.repository.GroupRepository;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
+@PreAuthorize("hasRole('ROLE_STUDENT')")
 public class GroupController {
 
   @Autowired
