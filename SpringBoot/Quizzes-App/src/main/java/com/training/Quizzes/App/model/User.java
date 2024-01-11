@@ -16,9 +16,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User {
 	
 	public enum Roles{
-		student,
-		teacher,
-		admin
+		ROLE_STUDENT,
+		ROLE_TEACHER,
+		ROLE_ADMIN
 	}
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class User {
     private String lastName;
     
     public User() {
-    	setRoles(Roles.student);
+    	setRoles(Roles.ROLE_STUDENT);
     	setFirstName("Hossam");
     	setLastName("Ahmed");
     }
