@@ -19,7 +19,7 @@ import com.training.Quizzes.App.repository.GroupRepository;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
 @RequestMapping("/api")
-@PreAuthorize("hasRole('ROLE_STUDENT')")
+//@PreAuthorize("hasRole('ROLE_STUDENT')")
 public class GroupController {
 
   @Autowired
