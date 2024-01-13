@@ -37,6 +37,16 @@ public class Teacher implements Person{
 	
 	@Column(name = "pictureUrl")
 	private String pictureUrl;
+	
+	@Column(name = "phoneNumber")
+	private String phoneNumber;
+
+	@Column(name = "address")
+	private String address;
+
+	@Column(name = "email")
+	private String email;
+
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "teachers")
 	@JsonIgnore
@@ -56,11 +66,14 @@ public class Teacher implements Person{
 		this (firstName,lastName,nationalId);
 		this.age = age;
 	}
-	public Teacher(String firstName, String lastName, String nationalId, int age, String pictureUrl) {
-		this (firstName,lastName,nationalId,age);
+	public Teacher(String firstName, String lastName, String nationalId, int age, String pictureUrl,String phoneNumber,
+			String address, String email) {
+		this(firstName,lastName,nationalId,age);
 		this.pictureUrl = pictureUrl;
+		this.phoneNumber = phoneNumber;
+		this.address = address;
+		this.email = email;
 	}
-
 
 	public int getId() {
 		return id;
@@ -117,6 +130,32 @@ public class Teacher implements Person{
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 
 	
 

@@ -49,8 +49,9 @@ public class StudentController {
 	@PostMapping("/students")
 	public ResponseEntity<Student> createStudent(@RequestBody Student student) {
 		System.out.println(student);
-		Student tempStudent = studentRepository.save(new Student(student.getFirstName(), student.getLastName(),
-				student.getNationalId(), student.getAge(), student.getPictureUrl()));
+		Student tempStudent = studentRepository.save(
+				new Student(student.getFirstName(), student.getLastName(),student.getNationalId(), student.getAge(),
+							student.getPictureUrl(),student.getPhoneNumber(),student.getAddress(),student.getEmail()));
 
 		return new ResponseEntity<>(tempStudent, HttpStatus.CREATED);
 	}
@@ -118,6 +119,9 @@ public class StudentController {
 		stu.setNationalId(studentRequest.getNationalId());
 		stu.setAge(studentRequest.getAge());
 		stu.setPictureUrl(studentRequest.getPictureUrl());
+		stu.setEmail(studentRequest.getEmail());
+		stu.setPhoneNumber(studentRequest.getPhoneNumber());
+		stu.setAddress(studentRequest.getAddress());
 
 		return new ResponseEntity<>(studentRepository.save(stu), HttpStatus.OK);
 	}

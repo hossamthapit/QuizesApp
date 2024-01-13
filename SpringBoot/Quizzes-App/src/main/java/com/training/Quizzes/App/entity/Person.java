@@ -16,4 +16,14 @@ public interface Person {
 	
 	String getPictureUrl();
 	void setPictureUrl(String pictureUrl);
+	
+	String getEmail();
+	void setEmail(String email);
+	
+	String getPhoneNumber();
+	void setPhoneNumber(String phoneNumber);
+
+	String getAddress();
+	void setAddress(String address);
+
 }
