@@ -1,6 +1,8 @@
 package com.training.Quizzes.App.entity;
 
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +28,9 @@ public class ExamRecord {
 	
 	@Column(name = "score")
 	private int score;
+	
+	@Column(name = "examDate")
+	private Date examDate;
 			
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "student_id", nullable = false)
@@ -40,13 +45,14 @@ public class ExamRecord {
 	private Exam exam ;
 	
 	public ExamRecord() {
-
+		
 	}
 
-	public ExamRecord(int score, Student student, Exam exam) {
+	public ExamRecord(int score, Student student, Exam exam, Date examDate) {
 		this.score = score;
 		this.student = student;
 		this.exam = exam;
+		this.examDate = examDate;
 	}
 
 	public int getId() {
@@ -80,7 +86,20 @@ public class ExamRecord {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
+	public Date getExamDate() {
+		return examDate;
+	}
+
+	public void setExamDate(Date examDate) {
+		this.examDate = examDate;
+	}
+
+	@Override
+	public String toString() {
+		return "ExamRecord [id=" + id + ", score=" + score + ", examDate=" + examDate + ", student=" + student
+				+ ", exam=" + exam + "]";
+	}
 	
 	
 	
