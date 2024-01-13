@@ -1,5 +1,6 @@
 package com.training.Quizzes.App.Controller;
 
+import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,10 @@ public class ExamRecordController {
 
 	@PostMapping("/examRecords")
 	public ResponseEntity<ExamRecord> createExamRecord(@RequestBody ExamRecord examRecord) {
+		System.out.println(examRecord);
+		System.out.println(examRecord.getExam());
 		ExamRecord tempRecord = examRecordRepository
-				.save(new ExamRecord(examRecord.getScore(), examRecord.getStudent(), examRecord.getExam()));
+				.save(new ExamRecord(examRecord.getScore(), examRecord.getStudent(), examRecord.getExam(),examRecord.getExamDate()));
 		return new ResponseEntity<>(tempRecord, HttpStatus.CREATED);
 	}
 
@@ -63,7 +66,7 @@ public class ExamRecordController {
 		ExamRecord tempRecord = examRecordRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam Record with id = " + id));
 
-		tempRecord = new ExamRecord(examRecord.getScore(), examRecord.getStudent(), examRecord.getExam());
+		tempRecord = new ExamRecord(examRecord.getScore(), examRecord.getStudent(), examRecord.getExam(),examRecord.getExamDate());
 
 		return new ResponseEntity<>(examRecordRepository.save(tempRecord), HttpStatus.OK);
 	}
