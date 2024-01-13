@@ -24,6 +24,8 @@ public class Question {
 	private String answer;
 
 	private int score;
+	
+	private int seconds;
 
 //	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "questions")
 //	@JsonIgnore
@@ -39,10 +41,13 @@ public class Question {
 	}
 
 	public Question(String description, String answer, int score) {
-		super();
 		this.description = description;
 		this.answer = answer;
 		this.score = score;
+	}
+	public Question(String description, String answer, int score, int seconds) {
+		this(description,answer,score);
+		this.seconds = seconds;
 	}
 
 	public int getId() {
@@ -94,13 +99,22 @@ public class Question {
 		return ((response.equals(answer)) ? score : 0);
 	}
 
-	public Exam getExams() {
+	public Exam getExam() {
 		return exam;
 	}
 
-	public void setExams(Exam exams) {
-		this.exam = exams;
+	public void setExam(Exam exam) {
+		this.exam = exam;
 	}
+
+	public int getSeconds() {
+		return seconds;
+	}
+
+	public void setSeconds(int seconds) {
+		this.seconds = seconds;
+	}
+	
 	
 	
 

@@ -42,7 +42,8 @@ public class TeacherController {
 	@PostMapping("/teachers")
 	public ResponseEntity<Teacher> createStudent(@RequestBody Teacher teacher) {
 		Teacher tempTeacher = teacherRepository.save(new Teacher(teacher.getFirstName(), teacher.getLastName(),
-				teacher.getNationalId(), teacher.getAge(), teacher.getPictureUrl()));
+				teacher.getNationalId(), teacher.getAge(), teacher.getPictureUrl(),teacher.getPhoneNumber(),teacher.getAddress(),
+				teacher.getEmail()));
 
 		return new ResponseEntity<>(tempTeacher, HttpStatus.CREATED);
 	}
@@ -109,6 +110,9 @@ public class TeacherController {
 		teacher.setNationalId(teacherRequest.getNationalId());
 		teacher.setAge(teacherRequest.getAge());
 		teacher.setPictureUrl(teacherRequest.getPictureUrl());
+		teacher.setEmail(teacherRequest.getEmail());
+		teacher.setPhoneNumber(teacherRequest.getPhoneNumber());
+		teacher.setAddress(teacherRequest.getAddress());
 
 		return new ResponseEntity<>(teacherRepository.save(teacher), HttpStatus.OK);
 	}

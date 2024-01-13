@@ -62,6 +62,7 @@ public class QuestionController {
 		tempQuestion.setDescription(question.getDescription());
 		tempQuestion.setAnswer(question.getAnswer());
 		tempQuestion.setScore(question.getScore());
+		tempQuestion.setSeconds(question.getSeconds());
 
 		return new ResponseEntity<>(questionRepository.save(tempQuestion), HttpStatus.OK);
 	}
@@ -98,7 +99,7 @@ public class QuestionController {
 		System.out.println(examId);
 		System.out.println(questionRequest);
 		Question question = examRepository.findById(examId).map(exam -> {
-			questionRequest.setExams(exam);
+			questionRequest.setExam(exam);
 			return questionRepository.save(questionRequest);
 		}).orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id = " + examId));
 
