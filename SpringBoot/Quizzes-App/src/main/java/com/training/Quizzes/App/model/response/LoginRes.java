@@ -1,6 +1,6 @@
 package com.training.Quizzes.App.model.response;
 
-import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.entity.User;
 
 public class LoginRes {
 	

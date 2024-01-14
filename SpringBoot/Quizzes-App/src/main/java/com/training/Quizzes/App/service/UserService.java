@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.entity.User;
 import com.training.Quizzes.App.repository.UserRepository;
 
 @Service

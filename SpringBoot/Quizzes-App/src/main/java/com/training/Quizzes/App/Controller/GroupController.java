@@ -12,9 +12,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
+import com.training.Quizzes.App.entity.User;
+import com.training.Quizzes.App.model.IUser.Roles;
 import com.training.Quizzes.App.repository.ExamRepository;
 import com.training.Quizzes.App.repository.GroupRepository;
-
+import com.training.Quizzes.App.repository.UserRepository;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 @RestController
@@ -26,6 +28,8 @@ public class GroupController {
   GroupRepository groupRepository;
   @Autowired
   ExamRepository examRepository;
+  @Autowired
+  UserRepository userRepository;
 
   @GetMapping("/groups")
 	public ResponseEntity<Page<Group>> getAllGroups(@RequestParam(required = false) String title,

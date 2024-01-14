@@ -47,12 +47,22 @@ public class StudentController {
 	}
 
 	@PostMapping("/students")
-	public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-		System.out.println(student);
-		Student tempStudent = studentRepository.save(
-				new Student(student.getFirstName(), student.getLastName(),student.getNationalId(), student.getAge(),
-							student.getPictureUrl(),student.getPhoneNumber(),student.getAddress(),student.getEmail()));
-
+	public ResponseEntity<Student> createStudent(@RequestBody Student teacherRequest) {
+		System.out.println(teacherRequest);
+		
+		Student tempStudent = new Student();
+		tempStudent.setFirstName(teacherRequest.getFirstName());
+		tempStudent.setLastName(teacherRequest.getLastName());
+		tempStudent.setEmail(teacherRequest.getEmail());
+		tempStudent.setPictureUrl(teacherRequest.getPictureUrl());
+		tempStudent.setPassword(teacherRequest.getPassword());
+		tempStudent.setRoles(teacherRequest.getRoles());
+		
+		tempStudent.setNationalId(teacherRequest.getNationalId());
+		tempStudent.setPhoneNumber(teacherRequest.getPhoneNumber());
+		tempStudent.setAddress(teacherRequest.getAddress());
+		tempStudent.setAge(teacherRequest.getAge());
+		studentRepository.save(tempStudent);
 		return new ResponseEntity<>(tempStudent, HttpStatus.CREATED);
 	}
 
@@ -116,12 +126,14 @@ public class StudentController {
 		System.out.println(studentRequest);
 		stu.setFirstName(studentRequest.getFirstName());
 		stu.setLastName(studentRequest.getLastName());
-		stu.setNationalId(studentRequest.getNationalId());
-		stu.setAge(studentRequest.getAge());
-		stu.setPictureUrl(studentRequest.getPictureUrl());
 		stu.setEmail(studentRequest.getEmail());
+		stu.setPictureUrl(studentRequest.getPictureUrl());
+		stu.setRoles(studentRequest.getRoles());
+		
+		stu.setNationalId(studentRequest.getNationalId());
 		stu.setPhoneNumber(studentRequest.getPhoneNumber());
 		stu.setAddress(studentRequest.getAddress());
+		stu.setAge(studentRequest.getAge());
 
 		return new ResponseEntity<>(studentRepository.save(stu), HttpStatus.OK);
 	}

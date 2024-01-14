@@ -1,6 +1,5 @@
 package com.training.Quizzes.App.Controller;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +39,21 @@ public class TeacherController {
 	}
 
 	@PostMapping("/teachers")
-	public ResponseEntity<Teacher> createStudent(@RequestBody Teacher teacher) {
-		Teacher tempTeacher = teacherRepository.save(new Teacher(teacher.getFirstName(), teacher.getLastName(),
-				teacher.getNationalId(), teacher.getAge(), teacher.getPictureUrl(),teacher.getPhoneNumber(),teacher.getAddress(),
-				teacher.getEmail()));
+	public ResponseEntity<Teacher> createStudent(@RequestBody Teacher teacherRequest) {
+		
+		Teacher tempTeacher = new Teacher();
+		tempTeacher.setFirstName(teacherRequest.getFirstName());
+		tempTeacher.setLastName(teacherRequest.getLastName());
+		tempTeacher.setEmail(teacherRequest.getEmail());
+		tempTeacher.setPictureUrl(teacherRequest.getPictureUrl());
+		tempTeacher.setPassword(teacherRequest.getPassword());
+		tempTeacher.setRoles(teacherRequest.getRoles());
+		
+		tempTeacher.setNationalId(teacherRequest.getNationalId());
+		tempTeacher.setPhoneNumber(teacherRequest.getPhoneNumber());
+		tempTeacher.setAddress(teacherRequest.getAddress());
+		tempTeacher.setAge(teacherRequest.getAge());
+		teacherRepository.save(tempTeacher);
 
 		return new ResponseEntity<>(tempTeacher, HttpStatus.CREATED);
 	}
@@ -107,12 +117,14 @@ public class TeacherController {
 
 		teacher.setFirstName(teacherRequest.getFirstName());
 		teacher.setLastName(teacherRequest.getLastName());
-		teacher.setNationalId(teacherRequest.getNationalId());
-		teacher.setAge(teacherRequest.getAge());
-		teacher.setPictureUrl(teacherRequest.getPictureUrl());
 		teacher.setEmail(teacherRequest.getEmail());
+		teacher.setPictureUrl(teacherRequest.getPictureUrl());
+		teacher.setRoles(teacherRequest.getRoles());
+		
+		teacher.setNationalId(teacherRequest.getNationalId());
 		teacher.setPhoneNumber(teacherRequest.getPhoneNumber());
 		teacher.setAddress(teacherRequest.getAddress());
+		teacher.setAge(teacherRequest.getAge());
 
 		return new ResponseEntity<>(teacherRepository.save(teacher), HttpStatus.OK);
 	}

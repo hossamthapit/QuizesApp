@@ -2,7 +2,7 @@ package com.training.Quizzes.App.auth;
 
 import org.springframework.stereotype.Component;
 
-import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.*;

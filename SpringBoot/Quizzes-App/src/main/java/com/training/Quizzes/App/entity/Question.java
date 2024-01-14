@@ -8,9 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
+
 
 @Entity
 @Table(name = "Questions")
@@ -19,17 +24,23 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@NotNull
+	@Length(min = 3, message = "The address must be at least 3 characters")
+	@Length(min = 300, message = "The address must be at maximum 60 characters")
 	private String description;
 
-	private String answer;
+	@NotNull
+	private int answer;
 
+	@NotNull
+	@Min(value = 1) 
+	@Max(value = 10000) 
 	private int score;
 	
+	@NotNull
+	@Min(value = 5) 
+	@Max(value = 60 * 60) 
 	private int seconds;
-
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "questions")
-//	@JsonIgnore
-//	private Set<Exam> exams = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "exam_id", nullable = false)
@@ -40,12 +51,12 @@ public class Question {
 
 	}
 
-	public Question(String description, String answer, int score) {
+	public Question(String description, int answer, int score) {
 		this.description = description;
 		this.answer = answer;
 		this.score = score;
 	}
-	public Question(String description, String answer, int score, int seconds) {
+	public Question(String description, int answer, int score, int seconds) {
 		this(description,answer,score);
 		this.seconds = seconds;
 	}
@@ -66,11 +77,11 @@ public class Question {
 		this.description = description;
 	}
 
-	public String getAnswer() {
+	public int getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(String answer) {
+	public void setAnswer(int answer) {
 		this.answer = answer;
 	}
 
@@ -80,19 +91,6 @@ public class Question {
 
 	public void setScore(int score) {
 		this.score = score;
-	}
-
-//	public Set<Exam> getExams() {
-//		return exams;
-//	}
-//
-//	public void setExams(Set<Exam> exams) {
-//		this.exams = exams;
-//	}
-
-	@Override
-	public String toString() {
-		return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score + "]";
 	}
 
 	public int checkAnswer(String response) {
@@ -113,6 +111,12 @@ public class Question {
 
 	public void setSeconds(int seconds) {
 		this.seconds = seconds;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [id=" + id + ", description=" + description + ", answer=" + answer + ", score=" + score
+				+ ", seconds=" + seconds + ", exam=" + exam + "]";
 	}
 	
 	

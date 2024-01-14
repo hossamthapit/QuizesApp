@@ -12,11 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "ExamRecords")
@@ -26,22 +27,25 @@ public class ExamRecord {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id ;
 	
+	@NotNull
+	@Min(value = 1) 
+	@Max(value = 10000) 
 	@Column(name = "score")
 	private int score;
 	
 	@Column(name = "examDate")
 	private Date examDate;
 			
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "student_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	//@JsonIgnore
 	private Student student ;
 
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "exam_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	//@JsonIgnore
 	private Exam exam ;
 	
 	public ExamRecord() {
