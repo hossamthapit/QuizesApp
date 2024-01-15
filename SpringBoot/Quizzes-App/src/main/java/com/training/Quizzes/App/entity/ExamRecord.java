@@ -36,13 +36,11 @@ public class ExamRecord {
 	@Column(name = "examDate")
 	private Date examDate;
 			
-	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "student_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Student student ;
 
-	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "exam_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)

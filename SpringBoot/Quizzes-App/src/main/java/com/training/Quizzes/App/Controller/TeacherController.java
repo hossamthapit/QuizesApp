@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
 import com.training.Quizzes.App.entity.Teacher;
+import com.training.Quizzes.App.model.IUser.Roles;
 import com.training.Quizzes.App.repository.GroupRepository;
 import com.training.Quizzes.App.repository.TeacherRepository;
 
@@ -47,7 +48,7 @@ public class TeacherController {
 		tempTeacher.setEmail(teacherRequest.getEmail());
 		tempTeacher.setPictureUrl(teacherRequest.getPictureUrl());
 		tempTeacher.setPassword(teacherRequest.getPassword());
-		tempTeacher.setRoles(teacherRequest.getRoles());
+		tempTeacher.setRoles(Roles.ROLE_TEACHER);
 		
 		tempTeacher.setNationalId(teacherRequest.getNationalId());
 		tempTeacher.setPhoneNumber(teacherRequest.getPhoneNumber());

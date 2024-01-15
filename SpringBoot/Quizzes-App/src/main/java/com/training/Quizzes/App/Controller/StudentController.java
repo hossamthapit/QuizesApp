@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
 import com.training.Quizzes.App.entity.Student;
+import com.training.Quizzes.App.model.IUser.Roles;
 import com.training.Quizzes.App.repository.GroupRepository;
 import com.training.Quizzes.App.repository.StudentRepository;
 
@@ -128,7 +129,7 @@ public class StudentController {
 		stu.setLastName(studentRequest.getLastName());
 		stu.setEmail(studentRequest.getEmail());
 		stu.setPictureUrl(studentRequest.getPictureUrl());
-		stu.setRoles(studentRequest.getRoles());
+		stu.setRoles(Roles.ROLE_STUDENT);
 		
 		stu.setNationalId(studentRequest.getNationalId());
 		stu.setPhoneNumber(studentRequest.getPhoneNumber());
