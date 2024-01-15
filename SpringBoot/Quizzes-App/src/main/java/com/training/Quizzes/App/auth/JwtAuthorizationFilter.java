@@ -1,7 +1,7 @@
 package com.training.Quizzes.App.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.entity.User;
 import com.training.Quizzes.App.service.UserService;
 
 import io.jsonwebtoken.Claims;

@@ -12,63 +12,63 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "students")
-public class Student implements Person {
+public class Student extends User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@Column(name = "firstName")
-	private String firstName;
 	
-	@Column(name = "lastName")
-	private String lastName;
-	
+	@NotNull
+	@Length(min = 14, message = "The password must 14 characters")
+	@Length(max = 14, message = "The password must 14 characters")
 	@Column(name = "nationalId")
 	private String nationalId;
 
-	@Column(name = "age")
-	private int age;
-
-	@Column(name = "pictureUrl")
-	private String pictureUrl;
-	
 	@Column(name = "phoneNumber")
 	private String phoneNumber;
 
+	@Length(min = 3, message = "The address must be at least 3 characters")
+	@Length(max = 60, message = "The address must be at maximum 60 characters")
 	@Column(name = "address")
 	private String address;
 
-	@Column(name = "email")
-	private String email;
-
+	@Min(value = 4) 
+	@Max(value = 85) 
+	@Column(name = "age")
+	private int age;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "students")
 	@JsonIgnore
 	private Set<Group> groups = new HashSet<>();
 	
 	public Student() {
-
+		
+	}
+	
+	public Student(String firstName,String lastName,String email,String password,String pictureUrl,Roles roles) {
+		super(firstName,lastName,email,password,pictureUrl,roles);
 	}
 
-	public Student(String firstName, String lastName, String nationalId, int age, String pictureUrl,String phoneNumber,
-			String address, String email) {
-		this.firstName = firstName;
-		this.lastName = lastName;
+	public Student(String firstName,String lastName,String email,String password,String pictureUrl,Roles roles,
+			String nationalId,String phoneNumber,String address,int age) {
+		this(firstName,lastName,email,password,pictureUrl,roles);
 		this.nationalId = nationalId;
-		this.age = age;
-		this.pictureUrl = pictureUrl;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
-		this.email = email;
+		this.age = age;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -78,29 +78,24 @@ public class Student implements Person {
 		this.id = id;
 	}
 
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public String getNationalId() {
 		return nationalId;
 	}
 
 	public void setNationalId(String nationalId) {
 		this.nationalId = nationalId;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	public String getAddress() {
+		return address;
 	}
 
 	public int getAge() {
@@ -119,48 +114,16 @@ public class Student implements Person {
 		this.groups = groups;
 	}
 
-	public String getPictureUrl() {
-		return pictureUrl;
-	}
-
-	public void setPictureUrl(String pictureUrl) {
-		this.pictureUrl = pictureUrl;
-	}
-
-	@Override
-	public String toString() {
-		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", nationalId="
-				+ nationalId + ", age=" + age + ", pictureUrl=" + pictureUrl + "]";
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
 	public void setAddress(String address) {
 		this.address = address;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", nationalId=" + nationalId + ", phoneNumber=" + phoneNumber + ", address="
+				+ address + ", age=" + age + ", groups=" + groups + "]";
 	}
 	
 	
-	
-	
-	
-
 
 }

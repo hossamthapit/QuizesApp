@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.ExamRecord;
 import com.training.Quizzes.App.entity.Question;
+import com.training.Quizzes.App.entity.Student;
 import com.training.Quizzes.App.repository.ExamRecordRepository;
 import com.training.Quizzes.App.repository.ExamRepository;
 import com.training.Quizzes.App.repository.StudentRepository;
@@ -45,10 +46,10 @@ public class ExamRecordController {
 	}
 
 	@GetMapping("/examRecords/{id}")
-	public ResponseEntity<ExamRecord> getExamRecordById(@PathVariable("id") int id) {
-		ExamRecord examRecord = examRecordRepository.findById(id)
+	public ResponseEntity<List<ExamRecord>> getExamRecordById(@PathVariable("id") int id) {
+		List<ExamRecord> examRecord = examRecordRepository.findByStudentId(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam Record with id = " + id));
-
+		System.out.println("id is " + id + "records" + examRecord.size());
 		return new ResponseEntity<>(examRecord, HttpStatus.OK);
 	}
 
@@ -86,18 +87,6 @@ public class ExamRecordController {
 	}
 	
 
-		@GetMapping("/students/{studentId}/examRecords")
-		public ResponseEntity<List<ExamRecord>> getAllExamRecordsByStudentsId(
-				@PathVariable(value = "studentId") int studentId) {
-	
-			if (!studentRepository.existsById(studentId)) {
-				throw new ResourceNotFoundException("Not found Student with id = " + studentId);
-			}
-	
-			List<ExamRecord> examRecords = examRecordRepository.findByStudentId( studentId);
-			return new ResponseEntity<>(examRecords, HttpStatus.OK);
-		}
-	
 		@DeleteMapping("/students/{studentId}/examRecords")
 		public ResponseEntity<List<Question>> deleteAllExamRecordsOfStudent(
 				@PathVariable(value = "studentId") int studentId) {

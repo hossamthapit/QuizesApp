@@ -1,7 +1,9 @@
 package com.training.Quizzes.App.Controller;
 
+import java.io.Console;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,10 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.auth.JwtUtil;
-import com.training.Quizzes.App.model.User;
+import com.training.Quizzes.App.entity.Student;
+import com.training.Quizzes.App.entity.User;
+import com.training.Quizzes.App.model.IUser.Roles;
 import com.training.Quizzes.App.model.request.LoginReq;
 import com.training.Quizzes.App.model.response.ErrorRes;
 import com.training.Quizzes.App.model.response.LoginRes;
+import com.training.Quizzes.App.repository.StudentRepository;
 import com.training.Quizzes.App.service.UserService;
 
 
@@ -27,11 +32,15 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private JwtUtil jwtUtil;
     private final UserService userService;
+    @Autowired
+    private final StudentRepository studentRepository;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UserService userService,
+    		StudentRepository studentRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
         this.userService = userService;
+        this.studentRepository = studentRepository;
     }
 
     @ResponseBody
@@ -46,6 +55,7 @@ public class AuthController {
             Authentication authentication =
                     authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword()));
             String email = authentication.getName();
+            
 //          User user = new User(email,"");
             // cast the existingUser to user 
             String token = jwtUtil.createToken(user);
@@ -63,13 +73,13 @@ public class AuthController {
         }
     }
     
-    @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
+    @PostMapping("/signup")
+    public ResponseEntity<?> register(@RequestBody Student student) {
         try {
             // Check if the user exist 
         	// user service has method :    Optional<User> findByEmail(String email);
-
-        	Optional<User> existingUser = userService.findByEmail(user.getEmail());
+        	System.out.println(student);
+        	Optional<User> existingUser = userService.findByEmail(student.getEmail());
 
         	if (existingUser.isPresent()) {
         	    return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -77,7 +87,8 @@ public class AuthController {
         	}
 
             // Register the user
-            User registeredUser = userService.registerUser(user);
+        	student.setRoles(Roles.ROLE_STUDENT);
+            User registeredUser = studentRepository.save(student);
 
             // Optionally, return registeredUser details
             return ResponseEntity.ok(registeredUser);
