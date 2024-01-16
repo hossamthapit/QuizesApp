@@ -29,13 +29,13 @@ public class Group {
 
 	@NotNull
 	@Length(min = 3, message = "The title must be at least 3 characters")
-	@Length(min = 60, message = "The title must be at maximum 60 characters")
+	@Length(max = 60, message = "The title must be at maximum 60 characters")
 	@Column(name = "title")
 	private String title;
 
 	@NotNull
 	@Length(min = 3, message = "The description must be at least 3 characters")
-	@Length(min = 60, message = "The description must be at maximum 60 characters")
+	@Length(max = 60, message = "The description must be at maximum 60 characters")
 	@Column(name = "description")
 	private String description;
 
