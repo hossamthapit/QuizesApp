@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.big-header {
+    text-align: center;
+    font-size: 2em;
+    padding: 20px;
+    color: #0016d7;
+    /* Choose your desired text color */
+    font-family: Arial, sans-serif;
+}
+
+.nav-pills {
+    background-color: #f8f9fa;
+    /* Choose your desired background color */
+}
+
+
+
+.elementToFadeInAndOut {
+    width: 200px;
+    height: 200px;
+    background: red;
+    -webkit-animation: fadeinout 1s linear forwards;
+    animation: fadeinout 1s linear forwards;
+}
+
+@-webkit-keyframes fadeinout {
+
+    0%,
+    70% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeinout {
+
+    0%,
+    70% {
+        opacity: 0;
+    }
+
+    70% {
+        opacity: 1;
+    }
+}
