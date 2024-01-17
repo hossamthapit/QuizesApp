@@ -1,0 +1,43 @@
+
+
+.blueInput{
+    background-color: #ccffa76d;
+    
+}
+
+.rightRadius{
+    border-radius: 0 55px 55px 0;
+    border:0px;
+    height: 80px;
+}
+
+.leftRadius{
+    border-radius: 55px 0 0 55px;
+    border:0px;
+    
+}
+
+input:focus {
+    /* outline-color: #ccffa7aa; */
+    outline: none;
+}
+
+input[type="text"] {
+    text-align: center;
+    font-size: 25px;
+}
+.btn {
+    font-size: 25px;
+  }
+
+  .btn-success {
+    background: #1b9100;
+    background: -webkit-linear-gradient(to right, #079100, #86ff78);
+    background: linear-gradient(to right, #079100, #86ff78);
+
+  }
+.bg-gradient-4 {
+    background: #1b9100;
+    background: -webkit-linear-gradient(to right, #079100, #86ff78);
+    background: linear-gradient(to right, #079100, #86ff78);
+}

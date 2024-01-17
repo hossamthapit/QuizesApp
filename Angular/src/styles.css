@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+.bg-gradient-student {
+    background: #000cb7;
+    background: -webkit-linear-gradient(to right, #002491, #789eff);
+    background: linear-gradient(to right, #002491, #789eff);
+}
+
+.bg-gradient-teacher {
+    background: #1b9100;
+    background: -webkit-linear-gradient(to right, #055f00, #86ff78);
+    background: linear-gradient(to right, #055f00, #86ff78);
+}

@@ -1,0 +1,75 @@
+
+To do(6) branch/refacor the project code 
+  1- (front) refactor front end html files and component ts
+  2- (back) add authorization roles to the controllers based on the front end behavoir 
+
+Easy
+.....................................................
+(front)(alot of code) Save the prevUrl in all components constructors to go back after every successful operation 
+  -- this.router.getCurrentNavigation().previousNavigation.finalUrl.toString()
+(front) Add validations to all front end input fields (group,exam,student,question,teacher)
+    -- Add validations to all front end
+    -- Enable error messages for validators
+
+Medium 
+.....................................................
+(front end) Add some notifications for adding and deleting , updating actions successfully or errors happen 
+(front end) Add confirm pop up window for delete 
+
+Hard 
+.....................................................
+add translation (dont know how yet)
+
+
+//////////////////////////////////////////// Done ////////////////////////////////////////////////////////
+To do(1) branch/fontawesome,question-time,more-info-for-user  : 
+    1- (Done) Enable font awesome (Done)
+    2- (Done) Replace some images and buttons with font awesome icons (Done)
+    3- (Done) (back and front) Add number of questions , total time , total points for each exam 
+        -- (Done) add minutes and seconds in each question entity in spring
+        -- (Done) add minutes and seconds in each question entity in angular
+        -- (Done) update any controller that sets the data from upcoming request (post and put requests)
+        -- (Done) the question component to view the time for each question
+        -- (Done) update the exam process component to to take the time from the exam object
+        -- (Done) update edit and new question components to have a minutes and second fields
+
+    4- (Done) (back and front) Add address , email , phone for each user(student/teacher) in user interface
+        -- (Done) add address , email , phone in user interface and update the class that implements it
+        -- (Done) add address , email , phone to user in angular
+        -- (Done) update any controller that sets the data from upcoming request (post and put requests)
+        -- (Done) update the profile/editStudent/editTeacher component to set address,email,phone
+    5- (Done) (front end) Add new group button feature or edit/delete group
+
+To do(2) branch/addExamRecordForStudent-ShowTakenExamsLogInProfile  : 
+  1- (Done) (back and front) Add exams record when student finish exam 
+    -- (Done) add date for the record 
+    -- (Done) add the record in the exam process page when finished the exam or ng destroy for the component 
+    -- (Done) check the controller post and get methods for saving a record 
+  2- (Done) (back and front) show the exams log for each studet in the profile for exams he finished 
+    --(Done) show score and time for each exam he entered
+
+To do(3) branch/add validations and error messages
+  1- (back and front) Add validations to all front end input fields and spring entities
+    -- (Done) Add validations to signup and login components
+    -- (Done) Add validations to spring entities
+    -- (Done) Enable error messages for validators in signup and login components
+  2- (Done) make the user and student or teacher the same class 
+    -- (Done) create an User class and inhert from it from student and teacher 
+    -- (Done) make the student and teacher extends the User 
+    -- (Done)change the front end user class comply with the new user class 
+    -- (Done)change the logining in the front end to work with the new user props 
+  3- (Done) Add signup page and update login page (sign up only for students)
+    -- (Done) create a sign up page in angular 
+    -- (Done) add a new method in auth to signup users 
+    -- (Done) modify the register api to take a student object  
+
+
+To do(4) branch/studentSpecificDataValidationToAllFrontPages
+  1- (Done)(back and front) stop student from entering exam he took before (already prevented as the sql 1 to 1 but check for it and dont show)
+    -- (Done) bring only exams if the student is part of this group and hasn't entered this exam before
+  2- (Done)(front) Add admin option to add teachers
+    -- (Done) enable the add teacher button only for admins in front end 
+
+To do(5) branch/refacor the project code 
+  1- (Done) (front) refactor the controllers (as jpa and add the rest under  get get put delete )
+  2- (Done) (front) refactor front end services (all functions return a promise)

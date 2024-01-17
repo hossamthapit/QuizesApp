@@ -1,0 +1,17 @@
+.badge span {
+    background-color: hsla(30, 8%, 95%, 0.137)  ;
+    font-size: 27px;
+    width: 60px;
+    height: 25px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+    display: flex;
+    color: rgba(145, 128, 128, 0.84);
+    justify-content: center;
+    align-items: center
+}
+
+.title {
+    color: red;
+}
+
