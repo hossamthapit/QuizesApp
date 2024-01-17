@@ -57,6 +57,13 @@ public class Group {
 		this.title = title;
 		this.description = description;
 	}
+	
+	public Group(Group group) {
+		this.title = group.getTitle();
+		this.description = group.getDescription();
+		this.students = group.getStudents();
+		this.teachers = group.getTeachers();
+	}
 
 	// getters and setters
 

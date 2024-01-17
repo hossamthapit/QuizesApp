@@ -1,7 +1,5 @@
 package com.training.Quizzes.App.repository;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
@@ -16,7 +14,7 @@ public interface ExamRepository extends JpaRepository<Exam, Integer> {
 
 	Page<Exam> findByTitleContaining(String title, PageRequest pageRequest);
 	
-	List<Exam> findExamsByGroupId(int groupId);
+	Page<Exam> findByGroupId(int groupId, PageRequest pageRequest);
 				
 	@Transactional
 	void deleteByGroupId(int groupId);

@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+
 @Entity
 @Table(name = "ExamRecords")
 public class ExamRecord {
@@ -55,6 +56,20 @@ public class ExamRecord {
 		this.student = student;
 		this.exam = exam;
 		this.examDate = examDate;
+	}
+	
+	public ExamRecord(ExamRecord examRecord) {
+		this.score = examRecord.getScore();
+		this.student = examRecord.getStudent();
+		this.exam = examRecord.getExam();
+		this.examDate = examRecord.getExamDate();
+	}
+	
+	public void update(ExamRecord examRecord) {
+		this.score = examRecord.getScore();
+		this.student = examRecord.getStudent();
+		this.exam = examRecord.getExam();
+		this.examDate = examRecord.getExamDate();
 	}
 
 	public int getId() {

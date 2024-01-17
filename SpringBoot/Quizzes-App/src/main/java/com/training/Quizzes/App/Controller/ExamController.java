@@ -1,8 +1,5 @@
 package com.training.Quizzes.App.Controller;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,10 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Exam;
-import com.training.Quizzes.App.entity.Group;
 import com.training.Quizzes.App.entity.Question;
 import com.training.Quizzes.App.repository.ExamRepository;
-import com.training.Quizzes.App.repository.GroupRepository;
+import com.training.Quizzes.App.repository.QuestionRepository;
 
 @RestController
 @RequestMapping("/api")
@@ -24,115 +20,80 @@ public class ExamController {
 
 	@Autowired
 	ExamRepository examRepository;
-	
+
 	@Autowired
-	GroupRepository groupRepository;
-	
+	QuestionRepository questionRepository;
+
 	@GetMapping("/exams")
-	public ResponseEntity<Page<Exam>> getAllExams(
-			@RequestParam(required = false) String title,
-			@RequestParam(defaultValue = "0") int page, 
+	public ResponseEntity<Page<Exam>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
 		Page<Exam> examsPage;
-		
-		System.out.println("test ");
-
-		if (title == null || title.isEmpty()) {
-			examsPage = examRepository.findAll(PageRequest.of(page, size));
-		} else {
-			examsPage = examRepository.findByTitleContaining(title, PageRequest.of(page, size));
-		}
-
-		if (examsPage.isEmpty()) {
+		examsPage = examRepository.findAll(PageRequest.of(page, size));
+		if (examsPage.isEmpty())
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-
 		return new ResponseEntity<>(examsPage, HttpStatus.OK);
 	}
 
 	@GetMapping("/exams/{id}")
-	public ResponseEntity<Exam> getGroupById(@PathVariable("id") int id) {
+	public ResponseEntity<Exam> getOne(@PathVariable("id") int id) {
+
 		Exam exam = examRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id = " + id));
-
 		return new ResponseEntity<>(exam, HttpStatus.OK);
 	}
 
 	@PostMapping("/exams")
-	public ResponseEntity<Exam> createExam(@RequestBody Exam exam) {
-		Exam tempExam = examRepository.save(new Exam(exam.getTitle()));
-		return new ResponseEntity<>(tempExam, HttpStatus.CREATED);
+	public ResponseEntity<Exam> post(@RequestBody Exam requestExam) {
+
+		Exam exam = new Exam(requestExam);
+		exam = examRepository.save(exam);
+		return new ResponseEntity<>(exam, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/exams/{id}")
-	public ResponseEntity<Exam> updateExam(@PathVariable("id") int id, @RequestBody Exam exam) {
-		Exam tempExam = examRepository.findById(id)
+	public ResponseEntity<Exam> put(@PathVariable("id") int id, @RequestBody Exam requestExam) {
+
+		Exam exam = examRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id = " + id));
-
-		tempExam.setTitle(exam.getTitle());
-		tempExam.setDescription(exam.getDescription());
-
-		return new ResponseEntity<>(examRepository.save(tempExam), HttpStatus.OK);
+		exam.setTitle(requestExam.getTitle());
+		exam.setDescription(requestExam.getDescription());
+		return new ResponseEntity<>(examRepository.save(exam), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/exams/{id}")
-	public ResponseEntity<HttpStatus> deleteGroup(@PathVariable("id") int id) {
-	    Exam exam = examRepository.findById(id)
-	            .orElseThrow(() -> new ResourceNotFoundException("Exam not found with id: " + id));
+	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
-	        examRepository.delete(exam);
-
-	        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	@DeleteMapping("/exams")
-	public ResponseEntity<HttpStatus> deleteAllExams() {
-		examRepository.deleteAll();
-
+		Exam exam = examRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id: " + id));
+		examRepository.delete(exam);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
-	@GetMapping("/groups/{groupId}/exams")
-	public ResponseEntity<List<Exam>> getAllExamRecordsByStudentsId(
-			@PathVariable(value = "groupId") int groupId) {
 
-		if (!groupRepository.existsById(groupId)) {
-			throw new ResourceNotFoundException("Not found Group with id = " + groupId);
+	/* Questions */
+
+	@GetMapping("/exams/{examId}/questions")
+	public ResponseEntity<Page<Question>> getExamQuestions(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "examId") int examId) {
+
+		if (!examRepository.existsById(examId)) {
+			throw new ResourceNotFoundException("Not found Exam with id = " + examId);
 		}
-
-		List<Exam> exams = examRepository.findExamsByGroupId(groupId);
-		return new ResponseEntity<>(exams, HttpStatus.OK);
-	}
-	
-	
-	@PostMapping("/groups/{groupId}/exams")
-	public ResponseEntity<Exam> createComment(@PathVariable(value = "groupId") int groupId,
-			@RequestBody Exam examRequest) {
-		
-	    return groupRepository.findById(groupId).map(group -> {
-	        Exam exam = new Exam(); 
-
-	        exam.setGroup(group);
-	        exam.setTitle(examRequest.getTitle());
-	        exam.setDescription(examRequest.getDescription());
-
-	        Exam savedExam = examRepository.save(exam); // Save the Exam
-	        return new ResponseEntity<>(savedExam, HttpStatus.CREATED);
-	    }).orElseThrow(() -> new ResourceNotFoundException("Not found Group with id = " + groupId));
+		Page<Question> questions = questionRepository.findByExamId(examId, PageRequest.of(page, size));
+		return new ResponseEntity<>(questions, HttpStatus.OK);
 	}
 
+	@PostMapping("/exams/{examId}/questions")
+	public ResponseEntity<Question> postExamQuestion(@PathVariable(value = "examId") int examId,
+			@RequestBody Question questionRequest) {
 
+		Exam exam = examRepository.findById(examId)
+				.orElseThrow(() -> new ResourceNotFoundException("Not found Exam with id: " + examId));
 
-//	@DeleteMapping("/groups/{groupId}/examRecords")
-//	public ResponseEntity<List<Question>> deleteAllExamRecordsOfStudent(
-//			@PathVariable(value = "groupId") int groupId) {
-//		if (!studentRepository.existsById((int) groupId)) {
-//			throw new ResourceNotFoundException("Not found Student with id = " + groupId);
-//		}
-//
-//		examRecordRepository.deleteByStudentId(groupId);
-//		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//	}
+		questionRequest.setExam(exam);
+		Question question = new Question(questionRequest);
+		question = questionRepository.save(question);
+		return new ResponseEntity<>(question, HttpStatus.CREATED);
+	}
 
 }

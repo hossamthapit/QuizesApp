@@ -12,10 +12,14 @@ import com.training.Quizzes.App.entity.Group;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface GroupRepository extends JpaRepository<Group, Integer> {
 
-	List<Group> findGroupsByStudentsId(int studentId);
 			
 	List<Group> findGroupsByTeachersId(int teacherId);
 			
 	Page<Group> findByTitleContaining(String title, PageRequest of);
+
+	Page<Group> findByStudentsId(int studentId, PageRequest of);
+
+	Page<Group> findByTeachersId(int teacherId, PageRequest of);
+
 
 }

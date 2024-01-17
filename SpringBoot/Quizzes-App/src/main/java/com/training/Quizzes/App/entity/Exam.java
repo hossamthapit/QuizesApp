@@ -21,34 +21,16 @@ public class Exam {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
 	
 	private String title;
+	
 	private String description;
-
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-//	@JoinTable(name = "exam_questions", joinColumns = { @JoinColumn(name = "exam_id") }, inverseJoinColumns = {
-//			@JoinColumn(name = "question_id") })
-//	private Set<Question> questions = new HashSet<>();
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "group_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonIgnore
 	private Group group;
-	
-//	public void addQuestion(Question question) {
-//		this.questions.add(question);
-//		question.getExams().add(this);
-//	}
-//
-//	public void removeQuestion(long questionId) {
-//		Question question = this.questions.stream().filter(t -> t.getId() == questionId).findFirst().orElse(null);
-//		if (question != null) {
-//			this.questions.remove(question);
-//			question.getExams().remove(this);
-//		}
-//	}
 
 	public Exam() {
 	}
@@ -56,7 +38,18 @@ public class Exam {
 	public Exam(String title) {
 		this.title = title;
 	}
-
+	
+	public Exam(String title, String desc) {
+		this(title);
+		this.description = desc;
+	}
+	
+	public Exam(Exam exam) {
+		this.title = exam.getTitle();
+		this.description = exam.getDescription();
+		this.group = exam.getGroup();
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -89,13 +82,7 @@ public class Exam {
 		this.description = description;
 	}
 
-//	public Set<Question> getQuestions() {
-//		return questions;
-//	}
-//
-//	public void setQuestions(Set<Question> questions) {
-//		this.questions = questions;
-//	}
+	
 
 	
 }

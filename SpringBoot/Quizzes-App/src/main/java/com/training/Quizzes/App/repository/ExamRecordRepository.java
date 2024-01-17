@@ -1,10 +1,11 @@
 package com.training.Quizzes.App.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -23,7 +24,7 @@ public interface ExamRecordRepository extends JpaRepository<ExamRecord, Integer>
 
 	List<ExamRecord> findExamRecordsByExamId(int groupId);
 	
-	Optional<List<ExamRecord>>  findByStudentId(int id);
+	Page<ExamRecord> findByStudentId(int id, PageRequest of);
 	
 
 }
