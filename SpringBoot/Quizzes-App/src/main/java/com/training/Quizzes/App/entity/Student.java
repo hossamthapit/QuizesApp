@@ -15,10 +15,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -68,6 +66,35 @@ public class Student extends User {
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 		this.age = age;
+	}
+	
+	public Student(Student student) {
+		this.setFirstName(student.getFirstName());
+		this.setLastName(student.getLastName());
+		this.setEmail(student.getEmail());
+		this.setPictureUrl(student.getPictureUrl());
+		this.setPassword(student.getPassword());
+		this.setRoles(student.getRoles());
+		
+		this.setNationalId(student.getNationalId());
+		this.setPhoneNumber(student.getPhoneNumber());
+		this.setAddress(student.getAddress());
+		this.setAge(student.getAge());
+
+	}
+	
+	public void update(Student student) {
+		this.setFirstName(student.getFirstName());
+		this.setLastName(student.getLastName());
+		this.setEmail(student.getEmail());
+		this.setPictureUrl(student.getPictureUrl());
+		this.setRoles(Roles.ROLE_STUDENT);
+		
+		this.setNationalId(student.getNationalId());
+		this.setPhoneNumber(student.getPhoneNumber());
+		this.setAddress(student.getAddress());
+		this.setAge(student.getAge());
+
 	}
 
 	public int getId() {

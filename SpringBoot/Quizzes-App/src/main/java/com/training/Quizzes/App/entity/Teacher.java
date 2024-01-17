@@ -18,7 +18,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,7 +40,7 @@ public class Teacher extends User{
 	private String phoneNumber;
 
 	@Length(min = 3, message = "The address must be at least 3 characters")
-	@Length(min = 60, message = "The address must be at maximum 60 characters")
+	@Length(max = 60, message = "The address must be at maximum 60 characters")
 	@Column(name = "address")
 	private String address;
 
@@ -71,6 +70,34 @@ public class Teacher extends User{
 		this.address = address;
 		this.age = age;
 	}
+	
+	public Teacher(Teacher teacher) {
+		this.setFirstName(teacher.getFirstName());
+		this.setLastName(teacher.getLastName());
+		this.setEmail(teacher.getEmail());
+		this.setPictureUrl(teacher.getPictureUrl());
+		this.setPassword(teacher.getPassword());
+		this.setRoles(teacher.getRoles());
+		
+		this.setNationalId(teacher.getNationalId());
+		this.setPhoneNumber(teacher.getPhoneNumber());
+		this.setAddress(teacher.getAddress());
+		this.setAge(teacher.getAge());
+	}
+	
+	public void update(Teacher teacher) {
+		this.setFirstName(teacher.getFirstName());
+		this.setLastName(teacher.getLastName());
+		this.setEmail(teacher.getEmail());
+		this.setPictureUrl(teacher.getPictureUrl());
+		this.setRoles(Roles.ROLE_TEACHER);
+		
+		this.setNationalId(teacher.getNationalId());
+		this.setPhoneNumber(teacher.getPhoneNumber());
+		this.setAddress(teacher.getAddress());
+		this.setAge(teacher.getAge());
+	}
+
 
 	public int getId() {
 		return id;

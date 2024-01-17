@@ -60,6 +60,21 @@ public class Question {
 		this(description,answer,score);
 		this.seconds = seconds;
 	}
+	
+	public Question(Question question) {
+		this.description = question.getDescription();
+		this.answer = question.getAnswer();
+		this.score = question.getScore();
+		this.seconds = question.getSeconds();		
+		this.exam = question.getExam();
+	}
+	
+	public void update(Question question) {
+		this.setDescription(question.getDescription());
+		this.setAnswer(question.getAnswer());
+		this.setScore(question.getScore());
+		this.setSeconds(question.getSeconds());
+	}
 
 	public int getId() {
 		return id;

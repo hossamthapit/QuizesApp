@@ -15,7 +15,7 @@ import com.training.Quizzes.App.model.IUser;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600, allowCredentials = "true")
 public interface  StudentRepository extends JpaRepository<Student, Integer>   {
 	
-    List<Student> findStudentsByGroupsId(int groupId);
+    Page<Student> findByGroupsId(int groupId,PageRequest of);
     
     List<Student> deleteStudentsByGroupsId(int groupId);
 
