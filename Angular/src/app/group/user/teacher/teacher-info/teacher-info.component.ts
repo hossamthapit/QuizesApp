@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TeacherService } from '../teacher.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Teacher } from '../../../../Models/Teacher';
+import { Teacher } from '../../../../../Models/Teacher';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -68,14 +68,17 @@ export class TeacherInfoComponent {
       // Add your logic to create a new teacher
       if(this.editing){
         this.teacherService.put(this.teacher).subscribe(response => {
+          console.log("edit teacher",this.teacher);
           this.teacher = response;
-           this.router.navigateByUrl('/teachers');
+           //this.router.navigateByUrl('/teachers');
         });
       }
       else {
-        console.log("teacher",this.teacher);
-        this.teacherService.post(this.teacher);
-        this.router.navigateByUrl('/teachers');
+        console.log("new teacher",this.teacher);
+        this.teacherService.post(this.teacher).subscribe(response => {
+          console.log("add teacher",this.teacher);
+        })
+        //this.router.navigateByUrl('/teachers');
       }
       this.teacherForm.reset();
     } else {

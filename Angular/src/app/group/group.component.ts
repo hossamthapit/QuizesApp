@@ -21,6 +21,7 @@ export class GroupComponent implements OnInit {
   groups: Group[] = [];
   isTeacher : boolean = false;
   isStudent : boolean = false;
+  isMemberOfTheGroup: Map<number, boolean> = new Map<number, boolean>();
 
 
   constructor(private groupService: GroupService, private router: Router,public authService : NewAuthService) { }
@@ -28,8 +29,36 @@ export class GroupComponent implements OnInit {
   ngOnInit() {
     this.isStudent = this.authService.isStudent();
     this.isTeacher = this.authService.isTeacher();
+
+    const loggedUserId = this.authService.loggedUserId();
+
+    this.groupService.getAll().subscribe(response => { 
+      this.groups = response.content;
+       //console.log(this.groups) ;
+       //this.groups = this.groups.filter(group => group.students.some(student => student.id === +(loggedUserId!))); // work 
+      
+       //  this.groups = this.groups.filter(group => {
+      //   if(group.students.some(student => student.id === +(loggedUserId!)) ||group.teachers.some(teacher => teacher.id === +(loggedUserId!)) ){
+      //     this.isMemberOfTheGroup.set(group.id, true);
+      //     console.log(group.id);
+      //     return true;
+      //   }
+      //   return false;
+      // }
+      //   ); // work 
+      });
+
     
-    this.groupService.getAll().subscribe(response => { this.groups = response.content; console.log(this.groups) });
+  }
+  
+   isUserInGroup(groupId: number) {
+    //if(groupId === 41)return ;
+    const loggedUserId = this.authService.loggedUserId();
+    if(this.groups.find(group => group.id === groupId)?.students.some(student => student.id === +(loggedUserId!)) || 
+        this.groups.find(group => group.id === groupId)?.teachers.some(teacher => teacher.id === +(loggedUserId!)) ){
+      return true;
+    }
+    return false;
   }
 
   groupTeachers(arg0: number) {

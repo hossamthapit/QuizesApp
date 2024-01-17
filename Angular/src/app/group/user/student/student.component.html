@@ -4,7 +4,7 @@
     <h2 class="font-weight-bold mb-2" *ngIf="!addingStudentsToGroup">{{group == null ? 'Students' : group.title}}</h2>
     <h2 class="font-weight-bold mb-2" *ngIf="addingStudentsToGroup">{{group == null ? 'Students' : "Add Students to " +
       group.title}}</h2>
-    <div *ngIf="!isAdmin">
+    <div *ngIf="!isStudent">
       <!-- <button *ngIf="group == null" class="btn btn-outline-primary mx-2" routerLink="/students/new">
         <i class="fa-solid fa-user-plus"></i> New
         Student </button> -->
@@ -34,14 +34,16 @@
             </div>
           </btn>
           <div class="bg-white p-4 d-flex justify-content-center">
-            <ul class="list-inline mb-0">
+            <ul class="list-inline mb-0" *ngIf="!isStudent">
               <li class="list-inline-item">
                 <button (click)="editStudent(student.id)" class="btn btn-outline-secondary btn-sm px-2"> <i
                     class="fa-solid fa-pen-to-square"> </i> Edit</button>
               </li>
-              <li class="list-inline-item" *ngIf="!addingStudentsToGroup">
-                <button (click)="deleteStudentFromGroup(student.id)" class="btn btn-outline-danger btn-sm px-2"><i
-                    class="fa-solid fa-trash"></i> Delete</button>
+              <li class="list-inline-item" *ngIf="!addingStudentsToGroup && group == null">
+                <button (click)="deleteStudentFromGroup(student.id)" class="btn btn-outline-danger btn-sm px-2 "><i class="fa-solid fa-trash"></i> Delete</button>
+              </li>
+              <li class="list-inline-item" *ngIf="!addingStudentsToGroup && group != null">
+                <button (click)="deleteStudentFromGroup(student.id)" class="btn btn-outline-danger btn-sm px-2 "><i class="fa-solid fa-user-minus"></i> Remove</button>
               </li>
               <li class="list-inline-item" *ngIf="addingStudentsToGroup">
                 <button (click)="addThisStudentToTheGroup(student.id)" class="btn btn-outline-success btn-sm px-2"><i class="fa-solid fa-user-plus"></i> Add To Group</button>

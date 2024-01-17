@@ -38,16 +38,13 @@ export class HttpRequestInterceptor implements HttpInterceptor {
 
   private addTokenHeader(headers: HttpHeaders): HttpHeaders {
     const token = this.storageService.getItem<string>('token');
-    const email = this.storageService.getItem<string>('email');
-
-    if (token && email) {
+    if (token) 
       headers = headers.set('Authorization', `Bearer ${token}`);
-      headers = headers.set('Email', email);
-    }
     return headers;
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
+    console.log("error happened in intercetor");
     if (!this.isRefreshing) {
       this.isRefreshing = true;
     }

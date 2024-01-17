@@ -15,7 +15,7 @@
 
     <div class="row">
         <div class="col-md-6" *ngFor="let exam of exams; let idx = index;">
-            <div class="card p-3 mb-2 bg-light">
+            <div class="card p-3 mb-2 bg-light position-relative">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <!-- <div class="icon"> <i class="bx bxl-mailchimp"></i> </div> -->
@@ -34,20 +34,31 @@
 
                 <div class="card-body">
                     <div class="row d-flex justify-content-center">
-                        <a *ngIf="isTeacher" (click)="startExam(exam.id)"
-                            class="btn btn-outline-primary col-lg-4"><i class="fa-regular fa-file-lines"></i> Questions</a>
-                        <a *ngIf="isTeacher" routerLink="/groups/{{group.id}}/exams/{{exam.id}}/edit"
-                            class="btn btn-outline-secondary mx-1 col-lg-3"><i
-                            class="fa-solid fa-pen-to-square"></i> Edit</a>
-                        <a *ngIf="isTeacher" (click)="deleteExam(exam.id)"
-                            class="btn btn-outline-danger col-lg-3"><i
-                            class="fa-solid fa-trash"></i> Delete</a>
-                        <a *ngIf="!isTeacher" [routerLink]="['/exams', exam.id, 'students',this.authService.loggedUserId(), 'start']"
+                        <a *ngIf="isTeacher" (click)="startExam(exam.id)" class="btn btn-outline-primary col-lg-4"><i
+                                class="fa-regular fa-file-lines"></i> Questions</a>
+                        <!-- <a 
+                            class="btn btn-outline-secondary mx-1 col-lg-3"><i class="fa-solid fa-pen-to-square"></i>
+                            Edit</a>
+                        <a  class="btn btn-outline-danger col-lg-3"><i
+                                class="fa-solid fa-trash"></i> Delete</a> -->
+                        <a *ngIf="!isTeacher"
+                            [routerLink]="['/exams', exam.id, 'students',this.authService.loggedUserId(), 'start']"
                             class="btn btn-success col-lg-3">Start</a>
-
                     </div>
+                    
                 </div>
-
+                
+                <span class="d-flex justify-content-start align-items-end position-absolute bottom-0 left-0 mb-2">
+                    <a *ngIf="isTeacher" (click)="deleteExam(exam.id)"
+                        class="btn btn-outline-danger mx-1 custom-small-btn rounded-circle">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <button class="btn btn-outline-secondary mx-1 custom-small-btn rounded-circle"
+                    *ngIf="isTeacher" routerLink="/groups/{{group.id}}/exams/{{exam.id}}/edit">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </button>
+                </span>
+                
             </div>
         </div>
     </div>

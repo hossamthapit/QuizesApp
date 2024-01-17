@@ -9,13 +9,14 @@ import { Subscription } from 'rxjs';
 import { StorageService } from './Auths/storage.service';
 import { NewAuthService } from './Auths/new-auth.service';
 import { Student } from '../Models/Student';
-import { StudentService } from './group/student/student.service';
+import { StudentService } from './group/user/student/student.service';
 import { Teacher } from '../Models/Teacher';
-import { TeacherService } from './group/teacher/teacher.service';
+import { TeacherService } from './group/user/teacher/teacher.service';
 import { QuestionService } from './group/exam/question/question.service';
 import { ExamService } from './group/exam/exam.service';
 import { GroupService } from './group/group.service';
 import { HeaderComponent } from './Component/header/header.component';
+import { UserService } from './group/user/user.service';
 
 
 @Component({
@@ -37,7 +38,8 @@ import { HeaderComponent } from './Component/header/header.component';
       TeacherService,
       QuestionService,
       ExamService,
-      GroupService
+      GroupService,
+      UserService
     ]
 })
 

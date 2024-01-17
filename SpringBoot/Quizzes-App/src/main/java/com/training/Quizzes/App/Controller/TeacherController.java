@@ -45,7 +45,6 @@ public class TeacherController {
 
 	@PostMapping("/teachers")
 	public ResponseEntity<Teacher> post(@RequestBody Teacher teacherRequest) {
-
 		Teacher teacher = new Teacher(teacherRequest);
 		teacher = teacherRepository.save(teacher);
 		return new ResponseEntity<>(teacher, HttpStatus.CREATED);

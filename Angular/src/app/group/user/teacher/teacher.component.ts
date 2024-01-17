@@ -5,10 +5,10 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TeacherService } from './teacher.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Group } from '../../../Models/Group';
-import { GroupService } from '../group.service';
-import { Teacher } from '../../../Models/Teacher';
-import { NewAuthService } from '../../Auths/new-auth.service';
+import { Group } from '../../../../Models/Group';
+import { GroupService } from '../../group.service';
+import { Teacher } from '../../../../Models/Teacher';
+import { NewAuthService } from '../../../Auths/new-auth.service';
 
 @Component({
   selector: 'app-teacher',

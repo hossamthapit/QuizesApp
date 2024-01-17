@@ -10,3 +10,22 @@
     background: -webkit-linear-gradient(to right, #055f00, #86ff78);
     background: linear-gradient(to right, #055f00, #86ff78);
 }
+
+.bg-gradient-admin {
+    background: #b77700;
+    background: -webkit-linear-gradient(to right, #916800, #ffdd78);
+    background: linear-gradient(to right, #916800, #ffdd78);
+}
+
+.custom-small-btn {
+    padding: 0.2rem 0.4rem !important; 
+    font-size: 0.7rem !important; 
+    border: 0 !important;
+    transition: all 0.3s ease !important;  /* Add a smooth transition for all properties over 0.3 seconds */
+}
+
+.custom-small-btn:hover {
+    padding: 0.4rem 0.8rem !important; 
+    font-size: 1rem !important; 
+    border: 0 !important;
+}

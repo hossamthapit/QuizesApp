@@ -8,7 +8,7 @@ import { GroupService } from '../group.service';
 import { Group } from '../../../Models/Group';
 import { NewAuthService } from '../../Auths/new-auth.service';
 import { ExamRecord } from '../../../Models/ExamRecord';
-import { StudentService } from '../student/student.service';
+import { StudentService } from '../user/student/student.service';
 
 @Component({
   selector: 'app-exam',

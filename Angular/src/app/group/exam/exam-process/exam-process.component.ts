@@ -8,7 +8,7 @@ import { QuestionService } from '../question/question.service';
 import { Observable, Subject, interval, min, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { ExamRecord } from '../../../../Models/ExamRecord';
-import { StudentService } from '../../student/student.service';
+import { StudentService } from '../../user/student/student.service';
 import { Student } from '../../../../Models/Student';
 
 @Component({

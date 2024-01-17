@@ -36,6 +36,12 @@
                 <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> <!-- User image -->
                 <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> <!-- User name -->
             </div>
+
+            <div *ngIf="this.authService.isAdmin()" style="cursor: pointer;" [routerLink]="['/user', this.authService.loggedUserId(), 'profile']" [queryParams]="{ admin: true }">
+                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> <!-- User image -->
+                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> <!-- User name -->
+            </div>
+
             <button  class="btn btn-outline-danger my-2 my-sm-0 mx-4" type="button" (click)="logout()"> <i class="fa-solid fa-right-from-bracket"></i> Logout</button>
         </div>
     </div>

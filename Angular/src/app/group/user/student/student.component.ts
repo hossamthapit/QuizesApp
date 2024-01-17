@@ -1,14 +1,14 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, Injectable, OnInit } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { Student } from '../../../Models/Student';
+import { Student } from '../../../../Models/Student';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { StudentService } from './student.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Group } from '../../../Models/Group';
-import { GroupService } from '../group.service';
-import { NewAuthService } from '../../Auths/new-auth.service';
+import { Group } from '../../../../Models/Group';
+import { GroupService } from '../../group.service';
+import { NewAuthService } from '../../../Auths/new-auth.service';
 
 @Component({
   selector: 'app-student',
