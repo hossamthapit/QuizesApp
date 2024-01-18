@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Exam;
@@ -25,6 +26,7 @@ public class ExamController {
 	QuestionRepository questionRepository;
 
 	@GetMapping("/exams")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Exam>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -36,6 +38,7 @@ public class ExamController {
 	}
 
 	@GetMapping("/exams/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Exam> getOne(@PathVariable("id") int id) {
 
 		Exam exam = examRepository.findById(id)
@@ -44,6 +47,7 @@ public class ExamController {
 	}
 
 	@PostMapping("/exams")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Exam> post(@RequestBody Exam requestExam) {
 
 		Exam exam = new Exam(requestExam);
@@ -52,6 +56,7 @@ public class ExamController {
 	}
 
 	@PutMapping("/exams/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Exam> put(@PathVariable("id") int id, @RequestBody Exam requestExam) {
 
 		Exam exam = examRepository.findById(id)
@@ -60,8 +65,9 @@ public class ExamController {
 		exam.setDescription(requestExam.getDescription());
 		return new ResponseEntity<>(examRepository.save(exam), HttpStatus.OK);
 	}
-
+	
 	@DeleteMapping("/exams/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		Exam exam = examRepository.findById(id)
@@ -73,6 +79,7 @@ public class ExamController {
 	/* Questions */
 
 	@GetMapping("/exams/{examId}/questions")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Question>> getExamQuestions(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "examId") int examId) {
 
@@ -84,6 +91,7 @@ public class ExamController {
 	}
 
 	@PostMapping("/exams/{examId}/questions")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Question> postExamQuestion(@PathVariable(value = "examId") int examId,
 			@RequestBody Question questionRequest) {
 

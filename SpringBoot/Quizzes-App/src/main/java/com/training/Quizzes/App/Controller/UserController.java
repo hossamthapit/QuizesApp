@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.ExamRecord;
@@ -26,6 +27,7 @@ public class UserController {
 	private UserRepository userRepository;
 
 	@GetMapping("/users")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<User>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -37,6 +39,7 @@ public class UserController {
 	}
 
 	@GetMapping("/users/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<User> getOne(@PathVariable(value = "id") int id) {
 
 		User user = userRepository.findById(id)
@@ -45,6 +48,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<User> post(@RequestBody User userRequest) {
 
 		User user = new User(userRequest);
@@ -53,6 +57,7 @@ public class UserController {
 	}
 
 	@PutMapping("/users/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<User> put(@PathVariable("id") int id, @RequestBody User userRequest) {
 
 
@@ -64,6 +69,7 @@ public class UserController {
 	}
 
 	@DeleteMapping("/users/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		User user = userRepository.findById(id)

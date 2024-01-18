@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Question;
@@ -23,6 +24,7 @@ public class QuestionController {
 	ExamRepository examRepository;
 
 	@GetMapping("/questions")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Question>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -34,6 +36,7 @@ public class QuestionController {
 	}
 
 	@GetMapping("/questions/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Question> getOne(@PathVariable("id") int id) {
 
 		Question question = questionRepository.findById(id)
@@ -42,6 +45,7 @@ public class QuestionController {
 	}
 
 	@PostMapping("/questions")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Question> post(@RequestBody Question requestQuestion) {
 
 		Question question = new Question(requestQuestion);
@@ -50,6 +54,7 @@ public class QuestionController {
 	}
 
 	@PutMapping("/questions/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Question> put(@PathVariable("id") int id, @RequestBody Question requestQuestion) {
 
 		Question question = questionRepository.findById(id)
@@ -60,6 +65,7 @@ public class QuestionController {
 	}
 
 	@DeleteMapping("/questions/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		Question question = questionRepository.findById(id)

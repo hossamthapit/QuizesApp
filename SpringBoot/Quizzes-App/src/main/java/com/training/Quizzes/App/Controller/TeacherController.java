@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Group;
@@ -25,6 +26,7 @@ public class TeacherController {
 	private GroupRepository groupRepository;
 
 	@GetMapping("/teachers")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Teacher>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -36,6 +38,7 @@ public class TeacherController {
 	}
 
 	@GetMapping("/teachers/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Teacher> getOne(@PathVariable(value = "id") int id) {
 
 		Teacher teacher = teacherRepository.findById(id)
@@ -44,6 +47,7 @@ public class TeacherController {
 	}
 
 	@PostMapping("/teachers")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Teacher> post(@RequestBody Teacher teacherRequest) {
 		Teacher teacher = new Teacher(teacherRequest);
 		teacher = teacherRepository.save(teacher);
@@ -51,6 +55,7 @@ public class TeacherController {
 	}
 
 	@PutMapping("/teachers/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<Teacher> put(@PathVariable("id") int id, @RequestBody Teacher teacherRequest) {
 
 		Teacher teacher = teacherRepository.findById(id)
@@ -61,6 +66,7 @@ public class TeacherController {
 	}
 
 	@DeleteMapping("/teachers/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		Teacher teacher = teacherRepository.findById(id)
@@ -72,6 +78,7 @@ public class TeacherController {
 	/* Groups */
 
 	@GetMapping("/teachers/{teacherId}/groups")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Page<Group>> getTeacherGroups(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "teacherId") int teacherId) {
 
