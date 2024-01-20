@@ -18,3 +18,8 @@
     font-size: 15px;
 }
 
+.modal-open .modal-backdrop {
+    backdrop-filter: blur(5px) !important;
+    background-color: rgba(0, 0, 0, 0.5)!important;
+    opacity: 1 !important;
+  }

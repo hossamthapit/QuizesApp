@@ -1,7 +1,7 @@
 
 To do(6) branch/refacor the project code 
   1- (front) refactor front end html files and component ts
-  2- (back) add authorization roles to the controllers based on the front end behavoir 
+  2- (Done) (back) add authorization roles to the controllers based on the front end behavoir 
   3- (Done) (front end) Add confirm pop up window for delete 
   4- (Done) change the delete and edit options to the left corner of the component in (groups,exam,question)
   5- (Done) only show group exams to teacher or student in the group

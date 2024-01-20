@@ -17,6 +17,7 @@ import { ExamService } from './group/exam/exam.service';
 import { GroupService } from './group/group.service';
 import { HeaderComponent } from './Component/header/header.component';
 import { UserService } from './group/user/user.service';
+import { MdbModalService } from 'mdb-angular-ui-kit/modal';
 
 
 @Component({
@@ -39,7 +40,8 @@ import { UserService } from './group/user/user.service';
       QuestionService,
       ExamService,
       GroupService,
-      UserService
+      UserService,
+      MdbModalService
     ]
 })
 
