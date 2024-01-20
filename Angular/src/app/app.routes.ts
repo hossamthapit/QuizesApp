@@ -39,7 +39,7 @@ export const routes: Routes = [
     { path: 'exams/:examId/questions/new', component: QuestionDetailsComponent,canActivate: [CanActivateRouteGuardService]  },
     { path: 'exams/:examId/result', component: ExamResultComponent,canActivate: [CanActivateRouteGuardService]  },
     
-    { path: 'groups', component: GroupComponent },
+    { path: 'groups', component: GroupComponent,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/:id/teachers', component: TeacherComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/:id/students', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/new', component: GroupDetailsComponent,canActivate: [CanActivateRouteGuardService]  },
