@@ -13,20 +13,29 @@
                 <div class="form-group row mb-3">
                     <label for="title" class="col-sm-2 col-form-label">Group Title </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="title"
-                         placeholder="Title Title" formControlName="title">
+                        <input type="text" id="title" placeholder="title" formControlName="title"
+                            class="form-control" [inputRequired]="groupForm.get('title')!">
+                        <span Class="text-danger text-bold" *ngIf="groupForm.get('title')?.hasError('minlength')">
+                            title must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="groupForm.get('title')?.hasError('maxlength')">
+                            title must be at maximum 60 characters</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="description" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="description" placeholder="Description" formControlName="description">
+                        <input type="text" id="description" placeholder="description" formControlName="description"
+                            class="form-control" [inputRequired]="groupForm.get('description')!">
+                        <span Class="text-danger text-bold" *ngIf="groupForm.get('description')?.hasError('minlength')">
+                            description must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="groupForm.get('description')?.hasError('maxlength')">
+                            description must be at maximum 60 characters</span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success" [disabled]="groupForm.invalid">Save</button>
                     </div>
                 </div>
                 <!-- hidden values -->

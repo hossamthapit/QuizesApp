@@ -26,7 +26,7 @@ public class Question {
 
 	@NotNull
 	@Length(min = 3, message = "The address must be at least 3 characters")
-	@Length(max = 300, message = "The address must be at maximum 60 characters")
+	@Length(max = 300, message = "The address must be at maximum 300 characters")
 	private String description;
 
 	@NotNull

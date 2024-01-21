@@ -1,5 +1,6 @@
 package com.training.Quizzes.App.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -8,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,8 +25,16 @@ public class Exam {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	@NotNull
+	@Length(min = 3, message = "The title must be at least 3 characters")
+	@Length(max = 60, message = "The title must be at maximum 60 characters")
+	@Column(name = "title")
 	private String title;
 	
+	@NotNull
+	@Length(min = 3, message = "The description must be at least 3 characters")
+	@Length(max = 60, message = "The description must be at maximum 60 characters")
+	@Column(name = "description")
 	private String description;
 
 	@ManyToOne(fetch = FetchType.EAGER, optional = false)

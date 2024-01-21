@@ -9,40 +9,55 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
-    
+
                 <div class="form-group row mb-3">
                     <label for="description" class="col-sm-2 col-form-label">Description </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="description"
-                         placeholder="Question Description" formControlName="description">
+                        <input type="text" id="description" placeholder="description" formControlName="description"
+                            class="form-control" [inputRequired]="questionForm.get('description')!">
+                        <span Class="text-danger text-bold"
+                            *ngIf="questionForm.get('description')?.hasError('minlength')">
+                            description must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="questionForm.get('description')?.hasError('maxlength')">
+                            description must be at maximum 300 characters</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="answer" class="col-sm-2 col-form-label">Answer</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="answer" placeholder="Answer" formControlName="answer">
+                        <input type="number" id="answer" placeholder="Answer" formControlName="answer"
+                            class="form-control" [inputRequired]="questionForm.get('answer')!">
+                        <!-- Answer input validation -->
+                        <span Class="text-danger text-bold" *ngIf="questionForm.get('answer')?.hasError('pattern')">
+                            only numbers are allowed</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="score" class="col-sm-2 col-form-label">Question Points</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="score" placeholder="Question Points" formControlName="score">
+                        <input type="number" id="age" placeholder="Question Points" formControlName="score" class="form-control">
+                        <span Class="text-danger text-bold"
+                            *ngIf="questionForm.get('score')?.hasError('min')||questionForm.get('score')?.hasError('max')">
+                            points must be at from 1 to 10000 years </span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="seconds" class="col-sm-2 col-form-label">Question Time in seconds</label>
                     <div class="col-sm-8">
-                        <input type="number" class="form-control" id="seconds" placeholder="Question Time in seconds" formControlName="seconds">
+                        <input type="number" id="seconds" placeholder="Question Time" formControlName="seconds" class="form-control">
+                        <span Class="text-danger text-bold"
+                            *ngIf="questionForm.get('seconds')?.hasError('max')||questionForm.get('seconds')?.hasError('min')||questionForm.get('seconds')?.hasError('seconds')">
+                            points must be at from 5 to 3600 seconds </span>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success" [disabled]="questionForm.invalid">Save</button>
                     </div>
                 </div>
                 <!-- hidden values -->
-                <input hidden="true" type="number" class="form-control" id="id"  formControlName="id">
+                <input hidden="true" type="number" class="form-control" id="id" formControlName="id">
             </form>
         </div>
     </div>

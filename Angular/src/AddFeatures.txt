@@ -1,18 +1,15 @@
-
-To do(6) branch/refacor the project code 
+To do(7) branch/refacor angular components
   1- (front) refactor front end html files and component ts
-  2- (Done) (back) add authorization roles to the controllers based on the front end behavoir 
-  3- (Done) (front end) Add confirm pop up window for delete 
-  4- (Done) change the delete and edit options to the left corner of the component in (groups,exam,question)
-  5- (Done) only show group exams to teacher or student in the group
+  2- (Done)(front)(alot of code after refactor component) Save the prevUrl in all components constructors to go back after every successful operation 
+      -- this.router.getCurrentNavigation().previousNavigation.finalUrl.toString()
+      -- in all add or edit components
+  3- (Done)(front) Add validations to all front end input fields (group,exam,student,question,teacher,login)
+      -- Add validations to all front end
+      -- Enable error messages for validators
 
 Easy
 .....................................................
-(front)(alot of code after refactor component) Save the prevUrl in all components constructors to go back after every successful operation 
-  -- this.router.getCurrentNavigation().previousNavigation.finalUrl.toString()
-(front) Add validations to all front end input fields (group,exam,student,question,teacher)
-    -- Add validations to all front end
-    -- Enable error messages for validators
+-- add teacher make it also in sign up and remove admin 
 
 Medium 
 .....................................................
@@ -75,3 +72,9 @@ To do(4) branch/studentSpecificDataValidationToAllFrontPages
 To do(5) branch/refacor the project code 
   1- (Done) (front) refactor the controllers (as jpa and add the rest under  get get put delete )
   2- (Done) (front) refactor front end services (all functions return a promise)
+
+To do(6) branch/refacor the project code 
+  1- (Done) (back) add authorization roles to the controllers based on the front end behavoir 
+  2- (Done) (front end) Add confirm pop up window for delete 
+  3- (Done) change the delete and edit options to the left corner of the component in (groups,exam,question)
+  4- (Done) only show group exams to teacher or student in the group

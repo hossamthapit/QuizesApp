@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StorageService } from '../../../Auths/storage.service';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
+import { InputRequiredDirective } from '../../../Directives/input-required.directive';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ import { HeaderComponent } from '../../header/header.component';
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HeaderComponent
+    HeaderComponent,
+    InputRequiredDirective
   ]
 })
 export class LoginComponent implements OnInit {
@@ -33,8 +35,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       id: 0,
-      email: ['hossamthapit0@gmail.com', Validators.required],
-      password: ['12345678', Validators.required],
+      email: ['hossamthapit0@gmail.com', [Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      password: ['12345678', [Validators.required, Validators.minLength(8)]],
     });
   }
 

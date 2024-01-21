@@ -7,11 +7,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Exam } from '../../../../Models/Exam';
 import { GroupService } from '../../group.service';
 import { Group } from '../../../../Models/Group';
+import { InputRequiredDirective } from '../../../Directives/input-required.directive';
 
 @Component({
   selector: 'app-exam-details',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, HttpClientModule, RouterLink, ReactiveFormsModule,InputRequiredDirective],
   templateUrl: './exam-details.component.html',
   styleUrl: './exam-details.component.css',
 })
@@ -22,16 +23,24 @@ export class ExamDetailsComponent {
   examId !: number;
   groupId !: number;
   editing: boolean = false;
+  prevUrl : string | null = null;
 
   constructor(private formBuilder: FormBuilder, private examService: ExamService, 
-    private route: ActivatedRoute,private router: Router,private groupService: GroupService) { }
+    private route: ActivatedRoute,private router: Router,private groupService: GroupService) {
+      var url = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl ;
+      this.prevUrl = url ? url.toString() : null;
+     }
+
+     goBack(){
+      this.router.navigate([this.prevUrl]);
+     }
 
   ngOnInit(): void {
     console.log("exam details ngOnInit() called");
     this.examForm = this.formBuilder.group({
       id: 0,
-      description: ['', Validators.required],
-      title: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(60), Validators.minLength(3)]],
+      title: ['', [Validators.required, Validators.maxLength(60), Validators.minLength(3)]],
     });
 
     this.route.params.subscribe(params => {
@@ -67,24 +76,21 @@ export class ExamDetailsComponent {
       if(this.editing){
         this.examService.put(this.exam).subscribe(response => {
           this.exam = response;
+          this.goBack();
         });
       }
       else {
-        console.log("Exam details onSubmit() addNew 1",this.exam,this.examForm.value);
         this.exam.group = this.group;
-        console.log("Exam details onSubmit() addNew 2",this.exam,this.examForm.value);
         this.exam.group = this.group;
         this.examService.postGroupExam(this.group.id,this.exam).subscribe(response => {
-          console.log("exam details onSubmit() addNew response message : ",response);
+          this.goBack();
         });
       }
-      // this.router.navigateByUrl('/exams');
       this.examForm.reset();
     } else {
       // Handle form validation errors or incomplete form
     }
   }
-
 
   
 

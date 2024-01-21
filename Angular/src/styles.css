@@ -29,3 +29,12 @@
     font-size: 1rem !important; 
     border: 0 !important;
 }
+
+.custome-bg {
+    background-color: rgba(255, 255, 255, 0.1); /* Set the desired opacity (0.0 to 1.0) */
+    background-image: url("/assets/background.jpg")!important;
+    background-size: contain; /* or cover, depending on your preference */
+    background-repeat: repeat; /* or repeat-x, repeat-y, no-repeat */
+    max-width: 100%;
+    max-height: 100vh; /* or any other desired height */
+}

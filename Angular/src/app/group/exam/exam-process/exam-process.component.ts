@@ -68,7 +68,7 @@ export class ExamProcessComponent implements OnInit {
   }
 
   updateTimerComponent(){
-    this.timerElement = interval(999)
+    this.timerElement = interval(100)
     .subscribe(x => {
       console.log(this.curQuestionIdx);
       const val = this.questions[this.curQuestionIdx].seconds - Math.floor(Math.abs(new Date().getTime() - this.startDate.getTime())/1000);

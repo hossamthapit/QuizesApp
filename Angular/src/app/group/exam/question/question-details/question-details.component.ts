@@ -5,11 +5,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Question } from '../../../../../Models/Question';
 import { QuestionService } from '../question.service';
+import { InputRequiredDirective } from '../../../../Directives/input-required.directive';
 
 @Component({
   selector: 'app-question-details',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, RouterLink, ReactiveFormsModule],
+  imports: [CommonModule, HttpClientModule, RouterLink, ReactiveFormsModule,InputRequiredDirective],
   templateUrl: './question-details.component.html',
   styleUrl: './question-details.component.css',
 })
@@ -20,16 +21,24 @@ export class QuestionDetailsComponent {
   examId !: number;
   editing: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private questionService: QuestionService, 
-    private route: ActivatedRoute,private router: Router) { }
-
+  prevUrl : string | null = null;   
+     
+     constructor(private formBuilder: FormBuilder, private questionService: QuestionService, 
+    private route: ActivatedRoute,private router: Router) { 
+      var url = this.router.getCurrentNavigation()?.previousNavigation?.finalUrl ;
+      this.prevUrl = url ? url.toString() : null;
+    }
+    
+    goBack(){
+     this.router.navigate([this.prevUrl]);
+    }
   ngOnInit(): void {
     this.questionForm = this.formBuilder.group({
       id: 0,
-      description: ['', Validators.required],
-      answer: ['', Validators.required],
-      score: ['', Validators.required],
-      seconds: ['', Validators.required],
+      description: ['', [Validators.required, Validators.maxLength(300), Validators.minLength(3)]],
+      answer: ['', [Validators.required,Validators.pattern('^[0-9]*$'),Validators.minLength(1)]],
+      score: ['', [Validators.required, Validators.max(10000), Validators.min(1)]],
+      seconds: ['', [Validators.required, Validators.max(3600), Validators.min(5)]],
     });
 
     this.route.params.subscribe(params => {
@@ -64,6 +73,7 @@ export class QuestionDetailsComponent {
       if(this.editing){
         this.questionService.put(this.question).subscribe(response => {
           this.question = response;
+          this.goBack();
           // this.router.navigateByUrl('/questions');
         });
       }
@@ -74,6 +84,7 @@ export class QuestionDetailsComponent {
         this.questionService.postExamQuestion(this.examId,this.question).subscribe(response => {
           console.log("question details onSubmit() addNew response message : ",response);
         });
+        this.goBack();
       }
       this.questionForm.reset();
     } else {

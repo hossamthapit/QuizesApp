@@ -16,43 +16,76 @@
                 <div class="form-group row mb-3">
                     <label for="firstName" class="col-sm-2 col-form-label">First Name </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
+                        <input type="text" id="firstName" placeholder="First Name" formControlName="firstName"
+                            class="form-control" [inputRequired]="teacherForm.get('firstName')!">
+                        <!-- First Name input validation -->
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('firstName')?.hasError('minlength')">
+                            first name must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="teacherForm.get('firstName')?.hasError('maxlength')">
+                            first name must be at maximum 20 characters</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
+                        <input type="text" id="lastName" placeholder="Last Name" formControlName="lastName"
+                            class="form-control" [inputRequired]="teacherForm.get('lastName')!">
+                        <!-- Last Name input validation -->
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('lastName')?.hasError('minlength')">
+                            last name must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="teacherForm.get('lastName')?.hasError('maxlength')">
+                            last name must be at maximum 20 characters</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="nationalId" class="col-sm-2 col-form-label">National Id</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="nationalId" placeholder="National Id Number" formControlName="nationalId">
+                        <input type="text" id="nationalId" placeholder="National ID" formControlName="nationalId"
+                            class="form-control" [inputRequired]="teacherForm.get('nationalId')!">
+                        <!-- National ID input validation -->
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('nationalId')?.hasError('pattern')">
+                            only numbers are allowed</span>
+                        <span Class="text-danger" *ngIf="teacherForm.get('nationalId')?.hasError('minlength')">
+                            national id must be 14 digits</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="age" class="col-sm-2 col-form-label">Age </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="age" placeholder="Age" formControlName="age">
+                        <input type="text" id="age" placeholder="Age" formControlName="age" class="form-control">
+                        <span Class="text-danger text-bold"
+                            *ngIf="teacherForm.get('age')?.hasError('min')||teacherForm.get('age')?.hasError('max')">
+                            age must be at from 4 to 85 years </span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="email" class="col-sm-2 col-form-label">Email </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="email" placeholder="Email" formControlName="email">
+                        <input type="text" id="email" placeholder="Email" formControlName="email" class="form-control"
+                            [inputRequired]="teacherForm.get('email')!">
+                        <!-- Email input validation -->
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('email')?.hasError('pattern')">
+                            Enter a valid email address</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="phoneNumber" class="col-sm-2 col-form-label">Phone Number </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" formControlName="phoneNumber">
+                        <input type="text" id="phoneNumber" placeholder="Phone Number" formControlName="phoneNumber"
+                            class="form-control">
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('phoneNumber')?.hasError('pattern')">
+                            enter a valid phone number</span>
                     </div>
                 </div>
                 <div class="form-group row mb-3">
                     <label for="address" class="col-sm-2 col-form-label">Address </label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="address" placeholder="Address" formControlName="address">
+                        <input type="text" id="address" placeholder="Address" formControlName="address"
+                            class="form-control">
+                        <span Class="text-danger text-bold" *ngIf="teacherForm.get('address')?.hasError('minlength')">
+                            address must be at least 3 characters</span>
+                        <span Class="text-danger" *ngIf="teacherForm.get('address')?.hasError('maxlength')">
+                            address must be at maximum 60 characters</span>
                     </div>
                 </div>
 
@@ -65,7 +98,7 @@
 
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-success">Save</button>
+                        <button type="submit" class="btn btn-success" [disabled]="teacherForm.invalid">Save</button>
                     </div>
                 </div>
                 <!-- hidden values -->
