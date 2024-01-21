@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.Exam;
@@ -22,6 +23,7 @@ import com.training.Quizzes.App.repository.UserRepository;
 @RestController
 @RequestMapping("/api")
 //@PreAuthorize("hasRole('ROLE_STUDENT')")
+
 public class GroupController {
 
 	@Autowired
@@ -35,7 +37,9 @@ public class GroupController {
 	@Autowired
 	TeacherRepository teacherRepository;
 
+	
 	@GetMapping("/groups")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Group>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -48,6 +52,7 @@ public class GroupController {
 	}
 
 	@GetMapping("/groups/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Group> getOne(@PathVariable("id") int id) {
 		Group group = groupRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Group with id = " + id));
@@ -55,12 +60,14 @@ public class GroupController {
 	}
 
 	@PostMapping("/groups")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Group> post(@RequestBody Group requestGroup) {
 		Group group = groupRepository.save(new Group(requestGroup));
 		return new ResponseEntity<>(group, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/groups/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Group> put(@PathVariable("id") int id, @RequestBody Group requestGroup) {
 		Group group = groupRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Group with id = " + id));
@@ -70,8 +77,9 @@ public class GroupController {
 
 		return new ResponseEntity<>(groupRepository.save(group), HttpStatus.OK);
 	}
-
+	
 	@DeleteMapping("/groups/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 		Group group = groupRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Not found Group with id: " + id));
@@ -82,6 +90,7 @@ public class GroupController {
 	/* Exams */
 
 	@GetMapping("/groups/{groupId}/exams")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Exam>> getGroupExams(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "groupId") int groupId) {
 
@@ -93,6 +102,7 @@ public class GroupController {
 	}
 
 	@PostMapping("/groups/{groupId}/exams")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Exam> postGroupExam(@PathVariable(value = "groupId") int groupId,
 			@RequestBody Exam examRequest) {
 
@@ -113,6 +123,7 @@ public class GroupController {
 	/* Students */
 
 	@GetMapping("/groups/{groupId}/students")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Student>> getGroupStudents(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "groupId") int groupId) {
 
@@ -124,6 +135,7 @@ public class GroupController {
 	}
 
 	@PostMapping("/groups/{groupId}/students/{studentId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> addStudentToGroup(@PathVariable(value = "groupId") int groupId,
 			@PathVariable(value = "studentId") int studentId) {
 
@@ -143,6 +155,7 @@ public class GroupController {
 	}
 
 	@DeleteMapping("/groups/{groupId}/students/{studentId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> deleteStudentFromGroup(@PathVariable(value = "groupId") int groupId,
 			@PathVariable(value = "studentId") int studentId) {
 
@@ -164,6 +177,7 @@ public class GroupController {
 	/* Teachers */
 
 	@GetMapping("/groups/{groupId}/teachers")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Teacher>> getGroupTeachers(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "groupId") int groupId) {
 
@@ -175,6 +189,7 @@ public class GroupController {
 	}
 
 	@PostMapping("/groups/{groupId}/teachers/{teacherId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> addTeacherToGroup(@PathVariable(value = "groupId") int groupId,
 			@PathVariable(value = "teacherId") int teacherId) {
 
@@ -194,6 +209,7 @@ public class GroupController {
 	}
 
 	@DeleteMapping("/groups/{groupId}/teachers/{teacherId}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> deleteTeacherFromGroup(@PathVariable(value = "groupId") int groupId,
 			@PathVariable(value = "teacherId") int teacherId) {
 

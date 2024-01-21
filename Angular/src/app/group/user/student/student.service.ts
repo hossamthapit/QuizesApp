@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap } from 'rxjs';
-import { Student } from '../../../Models/Student';
-import { ExamRecord } from '../../../Models/ExamRecord';
+import { Student } from '../../../../Models/Student';
+import { ExamRecord } from '../../../../Models/ExamRecord';
 
 @Injectable({
   providedIn: 'root'

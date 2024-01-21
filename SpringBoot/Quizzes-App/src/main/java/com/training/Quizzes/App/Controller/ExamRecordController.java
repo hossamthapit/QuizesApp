@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.ExamRecord;
@@ -26,6 +27,7 @@ public class ExamRecordController {
 	ExamRepository examRepository;
 
 	@GetMapping("/examRecords")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<ExamRecord>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -37,6 +39,7 @@ public class ExamRecordController {
 	}
 
 	@GetMapping("/examRecords/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<ExamRecord> getOne(@PathVariable("id") int id) {
 
 		ExamRecord examRecord = examRecordRepository.findById(id)
@@ -45,6 +48,7 @@ public class ExamRecordController {
 	}
 
 	@PostMapping("/examRecords")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<ExamRecord> post(@RequestBody ExamRecord requestExamRecord) {
 
 		ExamRecord examRecord = new ExamRecord(requestExamRecord);
@@ -53,6 +57,7 @@ public class ExamRecordController {
 	}
 
 	@PutMapping("/examRecords/{id}")
+	@PreAuthorize("hasRole('NOT_MODIFIABLE')") // this role doesn't exist, just to block access to it 
 	public ResponseEntity<ExamRecord> put(@PathVariable("id") int id, @RequestBody ExamRecord requestExamRecord) {
 
 		ExamRecord examRecord = examRecordRepository.findById(id)
@@ -62,6 +67,7 @@ public class ExamRecordController {
 	}
 
 	@DeleteMapping("/examRecords/{id}")
+	@PreAuthorize("hasRole('NOT_MODIFIABLE')") // this role doesn't exist, just to block access to it 
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		ExamRecord examRecord = examRecordRepository.findById(id)

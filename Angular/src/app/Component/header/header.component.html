@@ -6,7 +6,7 @@
     
     <div class="collapse navbar-collapse justify-content-between" id="navbarTogglerDemo01">
         
-        <a class="navbar-brand mx-4" routerLink="/quiz"><i class="fa-solid fa-newspaper"></i>Online Exams</a>
+        <a class="navbar-brand mx-4" routerLink="/"><i class="fa-solid fa-newspaper"></i>Online Exams</a>
 
         <ul class="navbar-nav" *ngIf="authService.isLoggedIn()">
             <li class="nav-item" routerLinkActive="active">
@@ -18,25 +18,27 @@
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/teachers" routerLinkActive="active">Teachers</a>
             </li>
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="/exams" routerLinkActive="active">Exams</a>
-            </li> -->
-            <!-- <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" routerLink="/questions" routerLinkActive="active">Questions</a>
-            </li> -->
         </ul>
-        <!-- Logout button -->
+
+        <!-- Logout button and user info -->
         <div class="d-flex align-items-center" *ngIf="authService.isLoggedIn()">
             <div *ngIf="this.authService.isStudent()" style="cursor: pointer;" [routerLink]="['/user', this.authService.loggedUserId(), 'profile']" [queryParams]="{ student: true }">
-                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> <!-- User image -->
-                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> <!-- User name -->
+                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30">
+                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span>
             </div>
 
             <div *ngIf="this.authService.isTeacher()" style="cursor: pointer;" [routerLink]="['/user', this.authService.loggedUserId(), 'profile']" [queryParams]="{ teacher: true }">
-                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> <!-- User image -->
-                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> <!-- User name -->
+                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> 
+                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> 
             </div>
+
+            <div *ngIf="this.authService.isAdmin()" style="cursor: pointer;" [routerLink]="['/user', this.authService.loggedUserId(), 'profile']" [queryParams]="{ admin: true }">
+                <img class="rounded-circle" [src]='"assets/" + this.storageService.getProfilePicture()' alt="User Image" width="30" height="30"> 
+                <span class="mr-3"> {{this.storageService.getFirstName()}} {{this.storageService.getlastName()}} </span> 
+            </div>
+
             <button  class="btn btn-outline-danger my-2 my-sm-0 mx-4" type="button" (click)="logout()"> <i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+        
         </div>
     </div>
 </nav>

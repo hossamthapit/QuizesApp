@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Student } from '../../../../Models/Student';
+import { Student } from '../../../../../Models/Student';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';

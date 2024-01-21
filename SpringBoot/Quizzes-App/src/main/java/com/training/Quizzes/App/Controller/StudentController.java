@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.training.Quizzes.App.entity.ExamRecord;
@@ -30,6 +31,7 @@ public class StudentController {
 	private ExamRecordRepository examRecordRepository;
 
 	@GetMapping("/students")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Student>> getAll(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size) {
 
@@ -41,6 +43,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/students/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Student> getOne(@PathVariable(value = "id") int id) {
 
 		Student student = studentRepository.findById(id)
@@ -49,6 +52,7 @@ public class StudentController {
 	}
 
 	@PostMapping("/students")
+	@PreAuthorize("hasRole('NOT_MODIFIABLE')") // block access to this controller
 	public ResponseEntity<Student> post(@RequestBody Student studentRequest) {
 
 		Student student = new Student(studentRequest);
@@ -57,6 +61,7 @@ public class StudentController {
 	}
 
 	@PutMapping("/students/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<Student> put(@PathVariable("id") int id, @RequestBody Student studentRequest) {
 
 		System.out.println(studentRequest + " " + id);
@@ -69,6 +74,7 @@ public class StudentController {
 	}
 
 	@DeleteMapping("/students/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER')")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") int id) {
 
 		Student student = studentRepository.findById(id)
@@ -80,6 +86,7 @@ public class StudentController {
 	/* Exam Records */
 
 	@GetMapping("/students/{studentId}/examRecords")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<ExamRecord>> getAllExamRecordsByGroupId(@PathVariable(value = "studentId") int studentId,
 			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
 
@@ -93,6 +100,7 @@ public class StudentController {
 	/* Groups */
 
 	@GetMapping("/students/{studentId}/groups")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_TEACHER') or hasRole('ROLE_STUDENT')")
 	public ResponseEntity<Page<Group>> getStudentGroups(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "20") int size, @PathVariable(value = "studentId") int studentId) {
 

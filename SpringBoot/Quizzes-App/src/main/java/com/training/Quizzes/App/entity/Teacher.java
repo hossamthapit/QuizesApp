@@ -76,13 +76,14 @@ public class Teacher extends User{
 		this.setLastName(teacher.getLastName());
 		this.setEmail(teacher.getEmail());
 		this.setPictureUrl(teacher.getPictureUrl());
-		this.setPassword(teacher.getPassword());
-		this.setRoles(teacher.getRoles());
+		this.setRoles(Roles.ROLE_TEACHER);
 		
 		this.setNationalId(teacher.getNationalId());
 		this.setPhoneNumber(teacher.getPhoneNumber());
 		this.setAddress(teacher.getAddress());
 		this.setAge(teacher.getAge());
+		
+		this.setPassword(teacher.getNationalId());
 	}
 	
 	public void update(Teacher teacher) {

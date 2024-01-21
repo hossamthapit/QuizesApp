@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { GroupComponent } from './group/group.component';
-import { StudentComponent } from './group/student/student.component';
-import { NewStudentComponent } from './group/student/new-student/new-student.component';
-import { TeacherComponent } from './group/teacher/teacher.component';
-import { TeacherInfoComponent } from './group/teacher/teacher-info/teacher-info.component';
+import { StudentComponent } from './group/user/student/student.component';
+import { NewStudentComponent } from './group/user/student/new-student/new-student.component';
+import { TeacherComponent } from './group/user/teacher/teacher.component';
+import { TeacherInfoComponent } from './group/user/teacher/teacher-info/teacher-info.component';
 import { ExamComponent } from './group/exam/exam.component';
 import { QuestionComponent } from './group/exam/question/question.component';
 import { QuestionDetailsComponent } from './group/exam/question/question-details/question-details.component';
@@ -18,8 +18,6 @@ import { LoggingComponent } from './Component/logging/logging.component';
 export const routes: Routes = [
 
     { path: '', component: LoggingComponent,canActivate: [CanActivateRouteGuardService] },
-
-    // { path: '', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
 
     { path: 'students', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'students/new', component: NewStudentComponent,canActivate: [CanActivateRouteGuardService]  },
@@ -39,7 +37,7 @@ export const routes: Routes = [
     { path: 'exams/:examId/questions/new', component: QuestionDetailsComponent,canActivate: [CanActivateRouteGuardService]  },
     { path: 'exams/:examId/result', component: ExamResultComponent,canActivate: [CanActivateRouteGuardService]  },
     
-    { path: 'groups', component: GroupComponent },
+    { path: 'groups', component: GroupComponent,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/:id/teachers', component: TeacherComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/:id/students', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'groups/new', component: GroupDetailsComponent,canActivate: [CanActivateRouteGuardService]  },

@@ -4,7 +4,7 @@
     <h2 class="font-weight-bold mb-2" *ngIf="!addingTeachersToGroup">{{group == null ? 'Teachers' : group.title}}</h2>
     <h2 class="font-weight-bold mb-2" *ngIf="addingTeachersToGroup">{{group == null ? 'Teachers' : "Add Teachers to " +
       group.title}}</h2>
-    <div>
+    <div *ngIf="isAdmin">
       <button *ngIf="group == null" class="btn btn-outline-success mx-2" routerLink="/teachers/new"> <i class="fa-solid fa-user-plus"> </i> New
         Teacher</button>
       <button *ngIf="!addingTeachersToGroup && group != null" class="btn btn-outline-success mx-2"
@@ -34,8 +34,8 @@
         </div>
       </btn>
         <div class="bg-white p-4 d-flex justify-content-center">
-          <ul class="list-inline mb-0" >
-              <li class="list-inline-item" *ngIf="!group" >
+          <ul class="list-inline mb-0" *ngIf="isAdmin">
+              <li class="list-inline-item"  >
                 <button (click)="editTeacher(teacher.id)" class="btn btn-outline-secondary btn-sm px-2"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
               </li>
               <li class="list-inline-item" *ngIf="!addingTeachersToGroup">

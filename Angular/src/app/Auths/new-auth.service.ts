@@ -24,7 +24,6 @@ export class NewAuthService {
     });
   }
   
-  // register, login, logout
   login(credentials: { email: string; password: string }): Observable<any> {   
     return this.http.post<any>(`${this.apiUrl}/login`, credentials);
   }

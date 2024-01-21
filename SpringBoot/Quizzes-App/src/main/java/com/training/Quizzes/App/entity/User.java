@@ -12,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import com.training.Quizzes.App.model.IUser;
+import com.training.Quizzes.App.model.IUser.Roles;
 
 import lombok.Data;
 
@@ -69,6 +70,24 @@ public class User implements IUser {
 		this.pictureUrl = pictureUrl;
 		this.roles = roles;
 	}
+	
+	public User(User user) {
+		this.setFirstName(user.getFirstName());
+		this.setLastName(user.getLastName());
+		this.setEmail(user.getEmail());
+		this.setPictureUrl(user.getPictureUrl());
+		this.setPassword(user.getPassword());
+		this.setRoles(Roles.ROLE_ADMIN);
+	}
+	
+	public void update(User user) {
+		this.setFirstName(user.getFirstName());
+		this.setLastName(user.getLastName());
+		this.setEmail(user.getEmail());
+		this.setPictureUrl(user.getPictureUrl());
+		this.setRoles(Roles.ROLE_ADMIN);
+	}
+
 
 	public int getId() {
 		return id;

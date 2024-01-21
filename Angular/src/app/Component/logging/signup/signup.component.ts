@@ -5,7 +5,7 @@ import { StorageService } from '../../../Auths/storage.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { StudentService } from '../../../group/student/student.service';
+import { StudentService } from '../../../group/user/student/student.service';
 import { HeaderComponent } from '../../header/header.component';
 import { InputRequiredDirective } from '../../../Directives/input-required.directive';
 
