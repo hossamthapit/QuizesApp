@@ -29,7 +29,7 @@ public class ExamRecord {
 	private int id ;
 	
 	@NotNull
-	@Min(value = 1) 
+	@Min(value = 0) 
 	@Max(value = 10000) 
 	@Column(name = "score")
 	private int score;

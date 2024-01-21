@@ -19,8 +19,6 @@ export const routes: Routes = [
 
     { path: '', component: LoggingComponent,canActivate: [CanActivateRouteGuardService] },
 
-    // { path: '', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
-
     { path: 'students', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'students/new', component: NewStudentComponent,canActivate: [CanActivateRouteGuardService]  },
     { path: 'students/:id/edit', component: NewStudentComponent ,canActivate: [CanActivateRouteGuardService] },
