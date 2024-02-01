@@ -23,6 +23,7 @@ export class ExamComponent {
   group: Group = {} as Group;
   isTeacher: boolean = false;
   isStudent: boolean = false;
+  examLoaded : boolean = false;
 
 
   constructor(private groupService: GroupService, private examService: ExamService, private router: Router,
@@ -52,8 +53,8 @@ export class ExamComponent {
                     const examsWithRecords = this.filterExamsWithoutRecords(response.content, studentExamRecord.content);
                     console.log("filtered exams ",examsWithRecords);
                     this.exams = examsWithRecords;
+                    this.examLoaded = true;
                     //this.exams = examsWithRecords;
-                    
                   })
                 }
               });

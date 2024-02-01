@@ -11,16 +11,17 @@
 
     <div class="row gutters-sm mt-5">
       <div class="col-md-4 mb-3">
-        <div class="card" [class.bg-gradient-student]="student != null"  [class.bg-gradient-teacher]="teacher != null" 
+        <!-- <div class="card" [class.bg-gradient-student]="student != null"  [class.bg-gradient-teacher]="teacher != null" 
         [class.bg-gradient-admin]="admin != null"
-         >
-          <div class="card-body" >
+         > -->
+         <div class="card custome-bg">
+           <div class="card-body" >
             <div class=" d-flex flex-column align-items-center text-center">
               <img src="assets/{{user.pictureUrl}}" alt="Admin" class="rounded-circle" width="150">
 
-                  <h4 class="text-white">{{user.firstName}}</h4>
-                  <p class="text-secondary mb-1 text-white">{{user.nationalId}}</p>
-                  <p class="font-size-sm text-white">{{user.address}}</p>
+                  <h4 class="text">{{user.firstName}}</h4>
+                  <p class="text-secondary mb-1 text">{{user.nationalId}}</p>
+                  <p class="font-size-sm text">{{user.address}}</p>
                   <div *ngIf="!isStudent" >
                     <button *ngIf="student != null" routerLink="/students/{{user.id}}/edit"
                     class="btn btn-light">Edit</button>

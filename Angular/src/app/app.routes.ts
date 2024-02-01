@@ -17,7 +17,7 @@ import { LoggingComponent } from './Component/logging/logging.component';
 
 export const routes: Routes = [
 
-    { path: '', component: LoggingComponent,canActivate: [CanActivateRouteGuardService] },
+    { path: '', component: LoggingComponent },
 
     { path: 'students', component: StudentComponent ,canActivate: [CanActivateRouteGuardService] },
     { path: 'students/new', component: NewStudentComponent,canActivate: [CanActivateRouteGuardService]  },

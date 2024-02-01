@@ -1,4 +1,8 @@
 .active {
-    color: black; /* For example */
-    /* Other styling */
-  }
+    color: black;
+}
+
+.custom-active {
+  background-color: #007bff;
+  color: white;
+}

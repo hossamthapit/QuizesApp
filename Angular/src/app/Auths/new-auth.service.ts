@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from './storage.service';
 import { Router } from '@angular/router';
-import { Roles } from '../../Models/User';
+import { Roles, User } from '../../Models/User';
 import { Student } from '../../Models/Student';
 
 @Injectable({
@@ -11,32 +11,23 @@ import { Student } from '../../Models/Student';
 })
 export class NewAuthService {
 
-
   private apiUrl = 'http://localhost:8080/api/auth'; // Your authentication API endpoint
-
 
   constructor(private http: HttpClient, private storageService: StorageService, private router: Router) {}
   
-  
-  run() {
-    this.http.get(this.apiUrl).subscribe(data => {
-      console.log(data);
-    });
-  }
-  
   login(credentials: { email: string; password: string }): Observable<any> {   
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials);
+    return this.http.post<any>(this.apiUrl+ '/login', credentials);
   }
 
   signUp(student : Student) {   
-    
-    return this.http.post<any>(`${this.apiUrl}/signup`, student).subscribe(data => {
+    return this.http.post<any>(this.apiUrl+ '/signup', student).subscribe(data => {
       console.log("response: ",data);
     });
   }
 
   logout(){
     this.storageService.clear();
+    this.storageService.setAuthState(false);
     this.router.navigateByUrl('/');
   }
 
@@ -55,7 +46,6 @@ export class NewAuthService {
     return this.storageService.getRoles() == Roles.student;
   }
 
-
   loggedUserId(){
     return this.storageService.getItem<string>('id');
   }
@@ -64,14 +54,22 @@ export class NewAuthService {
     return this.storageService.getItem<string>('pictureUrl');
   }
 
-
-
-
-  
-
-  
-  // refreshToken() {
-    //   return this.http.post(AUTH_API + 'refreshtoken', { }, httpOptions);
-    // }
-    
+  getFirstName(): string | null {
+    return this.storageService.getFirstName();
   }
+
+  getlastName(): string | null {
+    return this.storageService.getlastName();
+  }
+
+  getProfilePicture(): string | null {
+    return this.storageService.getProfilePicture();
+  }
+
+  getUser(): User {
+    console.log("user is : ",this.storageService.getUser());
+    return this.storageService.getUser();
+  }
+
+
+}

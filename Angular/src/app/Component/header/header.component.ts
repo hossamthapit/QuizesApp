@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NewAuthService } from '../../Auths/new-auth.service';
 import { StorageService } from '../../Auths/storage.service';
-import { Roles } from '../../../Models/User';
+import { Roles, User } from '../../../Models/User';
 
 @Component({
   selector: 'app-header',
@@ -16,14 +16,19 @@ import { Roles } from '../../../Models/User';
 
 export class HeaderComponent {
 
-  constructor(public authService: NewAuthService, public storageService: StorageService,private route: ActivatedRoute) {}
+  constructor(public authService: NewAuthService) {}
+
+  user!: User;
+
+  ngOnInit(){
+    this.user = this.authService.getUser();
+  }
 
   logout(){
     this.authService.logout();
-    this.storageService.setAuthState(false);
   }
 
   isLoggedIn(){
-    return this.authService.isLoggedIn()
+    return this.authService.isLoggedIn();
   }
 }

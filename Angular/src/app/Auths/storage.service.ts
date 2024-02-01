@@ -19,7 +19,7 @@ export class StorageService {
     localStorage.setItem(this.USER_KEY, JSON.stringify(user));
   }
 
-  getUser(): any {
+  getUser(): User {
     const userString = localStorage.getItem(this.USER_KEY);
     return userString ? JSON.parse(userString) : null;
   }
